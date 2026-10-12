@@ -178,22 +178,24 @@ export default function HomePage() {
                 {/* Decorative Frame */}
                 <div className="absolute -inset-3 rounded-2xl border border-champagne-300/60 bg-gradient-to-tr from-champagne-100/40 via-transparent to-champagne-200/30 -rotate-1 pointer-events-none" />
                 
-                {/* Main Hero Visual Card */}
-                <div className="relative rounded-xl overflow-hidden bg-white shadow-elevated border border-champagne-300">
-                  <div className="relative h-72 sm:h-96 w-full bg-mahogany-700">
-                    <Image
-                      src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=1200&auto=format&fit=crop"
-                      alt="Merit & Beyond Strategic People Advisory & Executive Planning"
-                      fill
-                      priority
-                      className="object-cover opacity-85 mix-blend-multiply"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-mahogany-700 via-transparent to-black/20" />
-                    <div className="absolute bottom-4 left-4 right-4 p-4 rounded-lg bg-white/90 backdrop-blur-md border border-champagne-300/80 shadow-sm">
+                {/* Main Hero Visual Card: The Official Liquid Gold MB Hallmark */}
+                <div className="relative rounded-2xl overflow-hidden bg-[#FAF5EE] shadow-elevated border border-champagne-300">
+                  <div className="relative h-72 sm:h-96 w-full flex items-center justify-center p-6 bg-gradient-to-b from-[#FAF5EE] via-[#F4E6D4] to-[#FAF5EE]">
+                    <div className="relative w-full h-full max-h-80 flex items-center justify-center">
+                      <Image
+                        src="/images/logo-full-badge.png"
+                        alt="Merit & Beyond Liquid Gold Monogram & Liquid Drop Hallmark"
+                        width={700}
+                        height={400}
+                        priority
+                        className="w-full h-full object-contain filter drop-shadow-md hover:scale-[1.02] transition-transform duration-500"
+                      />
+                    </div>
+                    <div className="absolute bottom-4 left-4 right-4 p-3.5 rounded-lg bg-white/95 backdrop-blur-md border border-champagne-300/80 shadow-sm">
                       <div className="flex items-center justify-between">
                         <div>
-                          <span className="text-[10px] tracking-widest uppercase font-semibold text-copper-700">Strategic Advisory</span>
-                          <p className="text-xs font-serif font-bold text-mahogany-600">Enterprise People Infrastructure</p>
+                          <span className="text-[10px] tracking-widest uppercase font-semibold text-copper-700">Official Brand Hallmark</span>
+                          <p className="text-xs font-serif font-bold text-mahogany-600">People · Process · Performance</p>
                         </div>
                         <Award className="w-5 h-5 text-copper-500" />
                       </div>

@@ -113,21 +113,23 @@ export default function AboutPage() {
               </div>
             </div>
 
-            {/* Visual element */}
+            {/* Visual element: Official Brand Hallmark */}
             <div className="lg:col-span-5 relative">
-              <div className="rounded-2xl overflow-hidden border border-champagne-300 shadow-elevated bg-mahogany-700 relative h-80 sm:h-96">
-                <Image
-                  src="https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=1000&auto=format&fit=crop"
-                  alt="Merit & Beyond Advisory Consultation"
-                  fill
-                  className="object-cover opacity-85 mix-blend-multiply"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-mahogany-700 via-transparent to-transparent" />
-                <div className="absolute bottom-6 left-6 right-6 p-5 rounded-xl bg-white/90 backdrop-blur-md border border-champagne-300">
+              <div className="rounded-2xl overflow-hidden border border-champagne-300 shadow-elevated bg-[#FAF5EE] relative p-6 flex flex-col justify-between h-80 sm:h-96">
+                <div className="relative w-full h-48 sm:h-56 flex items-center justify-center">
+                  <Image
+                    src="/images/logo-full-badge.png"
+                    alt="Merit & Beyond Official Brand Hallmark"
+                    width={600}
+                    height={350}
+                    className="w-full h-full object-contain filter drop-shadow-sm"
+                  />
+                </div>
+                <div className="p-4 rounded-xl bg-white/95 backdrop-blur-md border border-champagne-300">
                   <div className="text-xs uppercase tracking-widest text-copper-600 font-semibold mb-1">
                     Brand Core Statement
                   </div>
-                  <p className="text-base font-serif font-bold text-mahogany-600">
+                  <p className="text-sm sm:text-base font-serif font-bold text-mahogany-600">
                     &ldquo;People enable possibilities. We help you build what&apos;s next.&rdquo;
                   </p>
                 </div>

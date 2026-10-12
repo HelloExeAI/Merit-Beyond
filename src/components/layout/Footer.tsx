@@ -37,8 +37,10 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 lg:gap-12">
           {/* Brand & Introduction */}
           <div className="lg:col-span-4 space-y-5">
-            <Logo variant="light" size="lg" />
-            <p className="text-sm text-ivory-200/80 leading-relaxed font-sans max-w-sm pt-2">
+            <div className="p-3 sm:p-3.5 rounded-2xl bg-[#FAF5EE]/95 border border-champagne-300 inline-block shadow-md">
+              <Logo variant="dark" size="lg" />
+            </div>
+            <p className="text-sm text-ivory-200/80 leading-relaxed font-sans max-w-sm pt-1">
               Merit &amp; Beyond is a premium HR consulting and people advisory firm partnering with forward-looking organisations to strengthen people foundations, ensure statutory vigilance, and scale business performance.
             </p>
             <div className="pt-2 flex items-center gap-2 text-xs text-champagne-300">
