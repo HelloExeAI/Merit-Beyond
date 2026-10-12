@@ -156,16 +156,16 @@ export default function HomePage() {
               </div>
 
               {/* Trust Badges */}
-              <div className="pt-6 border-t border-champagne-300/40 grid grid-cols-3 gap-4 text-xs text-softblack-muted">
-                <div>
+              <div className="pt-6 border-t border-champagne-300/40 grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 text-xs text-softblack-muted">
+                <div className="p-2 sm:p-0 rounded-lg bg-white/40 sm:bg-transparent border sm:border-0 border-champagne-200/60">
                   <span className="font-semibold text-mahogany-500 block text-sm">6 Core</span>
                   <span>Advisory Disciplines</span>
                 </div>
-                <div>
+                <div className="p-2 sm:p-0 rounded-lg bg-white/40 sm:bg-transparent border sm:border-0 border-champagne-200/60">
                   <span className="font-semibold text-mahogany-500 block text-sm">100% Tailored</span>
                   <span>Execution Roadmaps</span>
                 </div>
-                <div>
+                <div className="p-2 sm:p-0 rounded-lg bg-white/40 sm:bg-transparent border sm:border-0 border-champagne-200/60">
                   <span className="font-semibold text-mahogany-500 block text-sm">Strict Discretion</span>
                   <span>&amp; Non-Disclosure</span>
                 </div>

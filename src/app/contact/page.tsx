@@ -212,7 +212,7 @@ function ContactFormContent() {
                   value={formData.fullName}
                   onChange={handleChange}
                   placeholder="e.g. Anand Sharma"
-                  className="w-full px-4 py-2.5 rounded-lg bg-ivory-50 border border-champagne-300 text-sm text-softblack focus:bg-white focus:outline-none focus:ring-2 focus:ring-copper-500"
+                  className="w-full px-4 py-2.5 rounded-lg bg-ivory-50 border border-champagne-300 text-base sm:text-sm text-softblack focus:bg-white focus:outline-none focus:ring-2 focus:ring-copper-500"
                 />
               </div>
 
@@ -228,7 +228,7 @@ function ContactFormContent() {
                   value={formData.workEmail}
                   onChange={handleChange}
                   placeholder="anand@company.com"
-                  className="w-full px-4 py-2.5 rounded-lg bg-ivory-50 border border-champagne-300 text-sm text-softblack focus:bg-white focus:outline-none focus:ring-2 focus:ring-copper-500"
+                  className="w-full px-4 py-2.5 rounded-lg bg-ivory-50 border border-champagne-300 text-base sm:text-sm text-softblack focus:bg-white focus:outline-none focus:ring-2 focus:ring-copper-500"
                 />
               </div>
             </div>
@@ -246,7 +246,7 @@ function ContactFormContent() {
                   value={formData.phone}
                   onChange={handleChange}
                   placeholder="+91 98765 43210"
-                  className="w-full px-4 py-2.5 rounded-lg bg-ivory-50 border border-champagne-300 text-sm text-softblack focus:bg-white focus:outline-none focus:ring-2 focus:ring-copper-500"
+                  className="w-full px-4 py-2.5 rounded-lg bg-ivory-50 border border-champagne-300 text-base sm:text-sm text-softblack focus:bg-white focus:outline-none focus:ring-2 focus:ring-copper-500"
                 />
               </div>
 
@@ -262,7 +262,7 @@ function ContactFormContent() {
                   value={formData.companyName}
                   onChange={handleChange}
                   placeholder="e.g. Apex Enterprises Ltd."
-                  className="w-full px-4 py-2.5 rounded-lg bg-ivory-50 border border-champagne-300 text-sm text-softblack focus:bg-white focus:outline-none focus:ring-2 focus:ring-copper-500"
+                  className="w-full px-4 py-2.5 rounded-lg bg-ivory-50 border border-champagne-300 text-base sm:text-sm text-softblack focus:bg-white focus:outline-none focus:ring-2 focus:ring-copper-500"
                 />
               </div>
             </div>
@@ -279,7 +279,7 @@ function ContactFormContent() {
                   value={formData.jobTitle}
                   onChange={handleChange}
                   placeholder="e.g. Managing Director / VP HR"
-                  className="w-full px-4 py-2.5 rounded-lg bg-ivory-50 border border-champagne-300 text-sm text-softblack focus:bg-white focus:outline-none focus:ring-2 focus:ring-copper-500"
+                  className="w-full px-4 py-2.5 rounded-lg bg-ivory-50 border border-champagne-300 text-base sm:text-sm text-softblack focus:bg-white focus:outline-none focus:ring-2 focus:ring-copper-500"
                 />
               </div>
 
@@ -292,7 +292,7 @@ function ContactFormContent() {
                   name="orgSize"
                   value={formData.orgSize}
                   onChange={handleChange}
-                  className="w-full px-4 py-2.5 rounded-lg bg-ivory-50 border border-champagne-300 text-sm text-softblack focus:bg-white focus:outline-none focus:ring-2 focus:ring-copper-500"
+                  className="w-full px-4 py-2.5 rounded-lg bg-ivory-50 border border-champagne-300 text-base sm:text-sm text-softblack focus:bg-white focus:outline-none focus:ring-2 focus:ring-copper-500"
                 >
                   <option value="">Select Headcount Range</option>
                   <option value="1-50 employees">1 - 50 employees (Early Growth)</option>
@@ -313,7 +313,7 @@ function ContactFormContent() {
                 required
                 value={formData.areaOfInterest}
                 onChange={handleChange}
-                className="w-full px-4 py-2.5 rounded-lg bg-ivory-50 border border-champagne-300 text-sm text-softblack focus:bg-white focus:outline-none focus:ring-2 focus:ring-copper-500"
+                className="w-full px-4 py-2.5 rounded-lg bg-ivory-50 border border-champagne-300 text-base sm:text-sm text-softblack focus:bg-white focus:outline-none focus:ring-2 focus:ring-copper-500"
               >
                 <option value="">Select a Consulting Discipline</option>
                 {servicesData.map((svc) => (
@@ -342,7 +342,7 @@ function ContactFormContent() {
                 value={formData.requirement}
                 onChange={handleChange}
                 placeholder="Please outline the specific challenges, upcoming milestones, or people objectives your organisation seeks to address..."
-                className="w-full px-4 py-3 rounded-lg bg-ivory-50 border border-champagne-300 text-sm text-softblack focus:bg-white focus:outline-none focus:ring-2 focus:ring-copper-500 leading-relaxed"
+                className="w-full px-4 py-3 rounded-lg bg-ivory-50 border border-champagne-300 text-base sm:text-sm text-softblack focus:bg-white focus:outline-none focus:ring-2 focus:ring-copper-500 leading-relaxed"
               />
             </div>
 

@@ -108,7 +108,7 @@ export default function InsightsPage() {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search topics, regulations..."
-                className="w-full pl-10 pr-4 py-2.5 rounded-lg bg-white border border-champagne-300 text-sm text-softblack placeholder:text-softblack-muted/60 focus:ring-2 focus:ring-copper-500 focus:outline-none"
+                className="w-full pl-10 pr-4 py-2.5 rounded-lg bg-white border border-champagne-300 text-base sm:text-sm text-softblack placeholder:text-softblack-muted/60 focus:ring-2 focus:ring-copper-500 focus:outline-none"
               />
             </div>
 
