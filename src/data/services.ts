@@ -6,539 +6,714 @@ export interface Service {
   shortSubtitle: string;
   discoverySummary: string;
   heroTagline: string;
-  iconName: 'Compass' | 'ShieldCheck' | 'Cpu' | 'Users' | 'Target' | 'GraduationCap';
+  isCoreAdvisory: boolean;
+  availability: 'Available at Launch' | 'By Request' | 'Future / Conditional';
+  iconName: 'Compass' | 'ShieldCheck' | 'Cpu' | 'Users' | 'Target' | 'GraduationCap' | 'Briefcase' | 'BarChart3';
   challengeHeadline: string;
   challengesAddressed: string[];
+  whatGoodLooksLike: string[];
   whyItMatters: string[];
-  specificSupport: {
-    area: string;
-    items: string[];
-  }[];
+  potentialFocusAreas: string[];
+  deliverables: string[];
+  engagementOptions: string[];
   scopeAndApproach: string;
   fiveStageApproach: {
-    stage: 'Understand' | 'Assess' | 'Design' | 'Implement' | 'Strengthen';
+    stage: 'Discover' | 'Diagnose' | 'Design' | 'Deliver' | 'Demonstrate';
     title: string;
     description: string;
   }[];
-  expectedOutcomes: string[];
+  faqs: {
+    question: string;
+    answer: string;
+  }[];
+  statutoryDisclaimer?: string;
   relatedServiceSlugs: string[];
 }
 
 export const servicesData: Service[] = [
   {
-    id: 'setup',
+    id: 'strategic-hr-consulting',
     categoryNumber: '01',
-    slug: 'people-advisory-organisation-setup',
-    title: 'People Advisory & Organisation Setup',
-    shortSubtitle: 'HR foundations, organisational design, workforce planning, policies, SOPs and governance',
-    discoverySummary: 'Setting up or strengthening the HR function, organisational structure, policies and processes.',
-    heroTagline: 'Architecting robust people foundations that scale seamlessly with business ambitions.',
+    slug: 'strategic-hr-consulting',
+    title: 'Strategic HR Consulting',
+    shortSubtitle: 'Clarify people priorities, strengthen HR governance and align HR plans with business objectives.',
+    discoverySummary: 'Setting strategic direction, establishing HR governance models, and aligning workforce capability with growth goals.',
+    heroTagline: 'Align people priorities with business objectives through practical HR strategy and disciplined implementation.',
+    isCoreAdvisory: true,
+    availability: 'Available at Launch',
     iconName: 'Compass',
     challengeHeadline: 'When growth outpaces organisational structure, friction replaces momentum.',
     challengesAddressed: [
-      'Ambiguous reporting hierarchies and overlapping operational accountabilities.',
-      'Absence of structured HR documentation, standard operating procedures, and employee handbooks.',
-      'Rapid headcount expansion without a coherent workforce planning model.',
-      'Informal decision-making leading to operational inconsistency and culture dilution.',
-      'Disjointed onboarding and lack of governance frameworks for leadership accountability.'
+      'People priorities that are reactive and disconnected from business milestones.',
+      'Ambiguous HR governance and informal decision-making leading to operational inconsistency.',
+      'Workforce planning gaps that leave key revenue units understaffed or poorly structured.',
+      'Lack of executive visibility into people metrics and leadership execution routines.',
+      'Inconsistent HR operating models across entities, subsidiaries, or business units.',
+    ],
+    whatGoodLooksLike: [
+      'A defined 12–24 month people roadmap directly tethered to corporate strategic goals.',
+      'Transparent HR operating model with clear decision-rights and escalation thresholds.',
+      'Disciplined quarterly people review cadence that informs leadership resource allocation.',
+      'Measurable workforce planning models with reliable hiring and capability triggers.',
     ],
     whyItMatters: [
-      'An organisation’s operating model is the invisible engine of its strategy. When fast-growing enterprises or reorganising businesses lack structured organisational blueprints, leadership spends disproportionate time firefighting misunderstandings rather than pursuing growth.',
-      'Foundational clarity does not mean stifling bureaucracy. Pragmatic, well-architected policies and governance frameworks provide the psychological safety and role clarity employees need to execute with speed and autonomous conviction.'
+      'An organisation’s people architecture is the engine of its strategy. Without clear priorities and governance, senior leaders spend excessive time firefighting operational misunderstandings rather than pursuing enterprise growth.',
+      'Practical strategy moves beyond glossy slide decks into usable operating procedures and measurable management review routines that your teams can execute every day.',
     ],
-    specificSupport: [
-      {
-        area: 'Organisation Design & Role Clarity',
-        items: [
-          'Diagnostic review of current organisational structures and functional interfaces.',
-          'Definition of spans of control, authority matrices, and accountability frameworks.',
-          'Comprehensive job architecture, role descriptions, and competency mappings.'
-        ]
-      },
-      {
-        area: 'HR Setup & Strategic Workforce Planning',
-        items: [
-          'End-to-end setup of the internal HR function and operating charter.',
-          'Medium- to long-term workforce modelling aligned with revenue targets.',
-          'Talent capacity planning and succession baseline blueprints.'
-        ]
-      },
-      {
-        area: 'Policies, SOPs & Governance Frameworks',
-        items: [
-          'Creation of tailored, compliant Employee Handbooks and Code of Conduct.',
-          'Standard Operating Procedures (SOPs) spanning the complete employee lifecycle.',
-          'Delegation of authority (DoA) guidelines and people risk governance protocols.'
-        ]
-      }
+    potentialFocusAreas: [
+      'People strategy and HR roadmap',
+      'HR operating model, roles and governance',
+      'Policy and process architecture',
+      'Workforce planning and organisational priorities',
+      'People metrics and management review routines',
     ],
-    scopeAndApproach: 'We partner directly with executive leadership and operational heads to calibrate your people structure against strategic objectives. Rather than transcribing generic templates, we build bespoke operational blueprints tailored to your industry, stage of growth, and cultural ethos.',
+    deliverables: [
+      '12-Month Strategic People Blueprint & Operating Charter',
+      'Comprehensive Role Architecture & Decision Rights Matrix (RACI)',
+      'Executive People KPI Dashboard & Review Cadence Guide',
+      'Workforce Capacity Modelling & Strategic Hiring Prioritisation Blueprint',
+    ],
+    engagementOptions: [
+      'Strategic Advisory Project (8–12 weeks defined roadmap build)',
+      'Executive Retainer (Quarterly strategic governance and cadence support)',
+      'Targeted Alignment Sprint (Focused 4-week priority reset)',
+    ],
+    scopeAndApproach: 'We partner directly with founders, CEOs, and executive boards to translate commercial ambitions into pragmatic people operating frameworks.',
     fiveStageApproach: [
       {
-        stage: 'Understand',
-        title: 'Strategic Immersion',
-        description: 'Deep-dive interviews with leadership to map business objectives, operating friction, and future organizational scale.'
+        stage: 'Discover',
+        title: 'Context & Objectives Immersion',
+        description: 'Understand business context, long-term strategic objectives, and immediate people priorities through executive dialogue.',
       },
       {
-        stage: 'Assess',
-        title: 'Structural & Policy Diagnostics',
-        description: 'Audit of existing reporting hierarchies, job definitions, workflow handoffs, and policy coverage.'
+        stage: 'Diagnose',
+        title: 'Operating Model Diagnostic',
+        description: 'Review current HR structures, evidence, pain points, risks, and root causes of operational drag.',
       },
       {
         stage: 'Design',
-        title: 'Blueprint Architecture',
-        description: 'Creation of optimized organizational charts, job descriptions, governance matrices, and custom policy suites.'
+        title: 'Roadmap & Governance Architecture',
+        description: 'Develop practical recommendations, governance tools, role definitions, and an agreed implementation roadmap.',
       },
       {
-        stage: 'Implement',
-        title: 'Phased Deployment',
-        description: 'Facilitated rollout of new structures, leadership alignment workshops, and employee lifecycle handbook briefings.'
+        stage: 'Deliver',
+        title: 'Milestone Execution & Rollout',
+        description: 'Support implementation through clear team ownership, enablement sessions, and defined progress milestones.',
       },
       {
-        stage: 'Strengthen',
-        title: 'Institutionalization & Review',
-        description: 'Quarterly review milestones to fine-tune spans of control and preserve organizational agility as headcount evolves.'
-      }
+        stage: 'Demonstrate',
+        title: 'Review Progress & Next Iteration',
+        description: 'Review progress against business outcomes, capture organisational learning, and identify the next cycle of improvement.',
+      },
     ],
-    expectedOutcomes: [
-      'Unambiguous accountability across executive, managerial, and operational tiers.',
-      'Dramatically reduced leadership time spent resolving functional boundary disputes.',
-      'Structured, audit-ready HR policy manuals and lifecycle SOPs.',
-      'Accelerated onboarding and faster time-to-productivity for new personnel.'
+    faqs: [
+      {
+        question: 'How is Strategic HR Consulting different from hiring an internal HR manager?',
+        answer: 'Internal HR managers often must focus on day-to-day administration and transactional operations. Strategic HR Consulting provides senior advisory expertise to design the systems, operating models, and governance that make internal teams dramatically more effective.',
+      },
+      {
+        question: 'What is the typical timeframe for a strategic consulting engagement?',
+        answer: 'A comprehensive strategic blueprint typically spans 8 to 12 weeks from initial diagnostic immersion to implementation handover, with optional quarterly review cadences.',
+      },
     ],
-    relatedServiceSlugs: [
-      'labour-law-compliance-people-audits',
-      'people-systems-payroll-compensation'
-    ]
+    relatedServiceSlugs: ['fractional-chro', 'hr-transformation', 'organisational-development'],
   },
   {
-    id: 'compliance',
+    id: 'fractional-chro',
     categoryNumber: '02',
-    slug: 'labour-law-compliance-people-audits',
-    title: 'Labour Law, Compliance & People Audits',
-    shortSubtitle: 'Labour law implementation, statutory compliance audits, people audits, gap analysis and process monitoring',
-    discoverySummary: 'Labour law, statutory obligations, people audits and compliance gaps.',
-    heroTagline: 'Rigorous statutory vigilance and proactive risk governance for enterprise peace of mind.',
-    iconName: 'ShieldCheck',
-    challengeHeadline: 'Compliance failures are rarely intentional, but statutory consequences are always severe.',
+    slug: 'fractional-chro',
+    title: 'Fractional CHRO Services',
+    shortSubtitle: 'Access structured senior HR leadership and people-strategy support through an agreed engagement model.',
+    discoverySummary: 'Access experienced executive HR leadership for steering people strategy, leadership cadence, and talent risk.',
+    heroTagline: 'Executive-level HR leadership tailored to high-growth, mid-market, or transforming organisations.',
+    isCoreAdvisory: true,
+    availability: 'Available at Launch',
+    iconName: 'Briefcase',
+    challengeHeadline: 'Your organisation needs executive people leadership, but full-time overhead is premature.',
     challengesAddressed: [
-      'Evolving Central and State labour regulations creating hidden liability exposures.',
-      'Non-compliant wage structures leading to prospective penalties and retrospective dues.',
-      'Inconsistent register maintenance, statutory filings, and contractor compliance lapses.',
-      'Absence of regular statutory health-checks prior to investment due diligence or audits.',
-      'Ambiguity regarding the upcoming Labour Codes and transition readiness.'
+      'Founders and CEOs spending 30%+ of their time resolving complex people and leadership friction.',
+      'Absence of an experienced voice in board and leadership meetings to navigate organizational risk.',
+      'Internal HR team lacking executive mentorship, strategic direction, and operating structure.',
+      'Uncertainty during rapid scaling, M&A integrations, or restructuring phases.',
+      'Critical talent retention and leadership capability gaps affecting quarterly execution.',
+    ],
+    whatGoodLooksLike: [
+      'Predictable, high-impact executive HR cadence supporting CEO and leadership priorities.',
+      'An empowered internal HR team executing against clear quarterly objectives.',
+      'Executive alignment on compensation, key hires, retention, and succession safeguards.',
+      'Structured people risk register discussed proactively in leadership reviews.',
     ],
     whyItMatters: [
-      'In modern corporate governance, human resources compliance is an enterprise risk management imperative, not a clerical checkbox. Regulatory penalties, reputational damage, and deal-breaking investor red flags frequently originate from unnoticed statutory non-conformities.',
-      'Merit & Beyond transforms compliance from a defensive chore into an institutional asset. We ensure your business operates securely, transparently, and with total statutory confidence across all state and national jurisdictions.'
+      'Early-stage and mid-market firms frequently reach a juncture where operational HR is in place, but complex talent strategy, culture preservation, and board-level people governance require seasoned executive judgment.',
+      'Fractional CHRO advisory delivers high-calibre leadership without the full-time cost, bringing external perspective and seasoned execution to your executive table.',
     ],
-    specificSupport: [
-      {
-        area: 'Comprehensive Statutory Audits',
-        items: [
-          'Full-scope diagnostic audit across Factories Act, Shops & Establishments, and applicable Acts.',
-          'Detailed verification of EPF, ESIC, Professional Tax, and Gratuity obligations.',
-          'Rigorous gap analysis report categorized by critical, high, and moderate legal risk.'
-        ]
-      },
-      {
-        area: 'Wage Structuring & Contract Labour Compliance',
-        items: [
-          'Statutory alignment of salary structures ensuring minimum wage and code compliance.',
-          'Audit of third-party vendors and contractor manpower compliance management.',
-          'Remediation roadmaps to eliminate statutory exposure without disrupting cash flow.'
-        ]
-      },
-      {
-        area: 'Governance Registers & Inspection Preparedness',
-        items: [
-          'Implementation of digitized and physically verifiable statutory registers.',
-          'Preparation of response protocols and mock-inspection readiness routines.',
-          'Continuous advisory on amendments, notifications, and labor court precedents.'
-        ]
-      }
+    potentialFocusAreas: [
+      'Agreed senior HR advisory cadence',
+      'People agenda and leadership-team support',
+      'HR team priorities and operating rhythm',
+      'Workforce, talent and organisational risk discussions',
+      'Defined progress reviews and next steps',
     ],
-    scopeAndApproach: 'Our compliance specialists combine deep statutory mastery with practical business sense. We conduct thorough, evidence-based audits, produce prioritized remediation roadmaps, and assist your internal teams in executing every corrective action until absolute compliance is achieved.',
+    deliverables: [
+      'Executive People Agenda & Leadership Cadence Calendar',
+      'Monthly/Quarterly HR Risk Register & Advisory Briefings',
+      'Internal HR Team Mentorship & Priority Operating System',
+      'Board & Investor People Metrics Reporting Pack',
+    ],
+    engagementOptions: [
+      'Dedicated Retainer (Agreed days per week or month)',
+      'Interim Transition Leadership (Full executive coverage during search or turnaround)',
+      'Advisory Sounding Board (Scheduled bi-weekly strategic cadence)',
+    ],
+    scopeAndApproach: 'We integrate with your leadership team as a trusted peer, attending key management forums, shaping strategy, and directing your HR function.',
     fiveStageApproach: [
       {
-        stage: 'Understand',
-        title: 'Entity & Footprint Scoping',
-        description: 'Mapping your commercial footprint, establishment classifications, state-level registrations, and vendor relationships.'
+        stage: 'Discover',
+        title: 'Executive Alignment',
+        description: 'Establish leadership priorities, business targets, stakeholder expectations, and engagement boundaries.',
       },
       {
-        stage: 'Assess',
-        title: 'Forensic People & Records Audit',
-        description: 'Exhaustive verification of registers, wage rolls, contribution returns, filings, and contractor documentation.'
+        stage: 'Diagnose',
+        title: 'Cadence & Capability Audit',
+        description: 'Examine current HR team capabilities, governance rhythms, urgent people bottlenecks, and talent risks.',
       },
       {
         stage: 'Design',
-        title: 'Remediation Architecture',
-        description: 'Delivery of a prioritized risk matrix detailing exact statutory breaches, monetary exposures, and step-by-step corrective protocols.'
+        title: 'Charter & Operating Rhythm',
+        description: 'Define the executive people agenda, meeting rhythm, priority projects, and reporting milestones.',
       },
       {
-        stage: 'Implement',
-        title: 'Process Rectification & Restructuring',
-        description: 'Hands-on correction of salary slips, register digitization, vendor compliance SOPs, and arrears reconciliation.'
+        stage: 'Deliver',
+        title: 'Active Advisory Leadership',
+        description: 'Participate in leadership forums, coach HR leads, steer strategic initiatives, and resolve escalations.',
       },
       {
-        stage: 'Strengthen',
-        title: 'Sustained Compliance Monitoring',
-        description: 'Periodic audit check-ins and quarterly monitoring mechanisms to maintain 100% audit-readiness throughout the year.'
-      }
+        stage: 'Demonstrate',
+        title: 'Value & Continuity Review',
+        description: 'Evaluate leadership outcomes, measure team growth, and structure long-term succession for full-time transition when ready.',
+      },
     ],
-    expectedOutcomes: [
-      'Zero-surprise regulatory posture backed by verified statutory documentation.',
-      'Immediate mitigation of high-risk liabilities and penalty vulnerabilities.',
-      'Complete transparency and confidence during investor or third-party due diligence.',
-      'Seamless oversight of contract staffing and external vendor obligations.'
+    faqs: [
+      {
+        question: 'How many days per month does a Fractional CHRO typically commit?',
+        answer: 'Engagements typically range from 2 to 6 days per month, structured into weekly leadership rhythms, monthly strategic reviews, and ongoing asynchronous counsel.',
+      },
+      {
+        question: 'Will the Fractional CHRO manage our existing HR staff?',
+        answer: 'Yes. The Fractional CHRO provides strategic direction, prioritization, and professional mentorship to your internal HR team, elevating their capabilities.',
+      },
     ],
-    relatedServiceSlugs: [
-      'people-advisory-organisation-setup',
-      'people-systems-payroll-compensation'
-    ]
+    relatedServiceSlugs: ['strategic-hr-consulting', 'hr-transformation', 'labour-law-compliance-audits'],
   },
   {
-    id: 'systems',
+    id: 'hr-transformation',
     categoryNumber: '03',
-    slug: 'people-systems-payroll-compensation',
-    title: 'People Systems, Payroll & Compensation',
-    shortSubtitle: 'HRMS, payroll improvement, compensation frameworks, salary structures and people analytics',
-    discoverySummary: 'HRMS, payroll processes, compensation structures and people analytics.',
-    heroTagline: 'Unifying compensation strategy, accurate payroll, and modern HR technology into a frictionless ecosystem.',
+    slug: 'hr-transformation',
+    title: 'HR Transformation & Process Optimisation',
+    shortSubtitle: 'Review and improve HR workflows, operating procedures, technology use and governance.',
+    discoverySummary: 'Auditing and modernizing HR workflows, SOPs, HRMS adoption, and data quality across the lifecycle.',
+    heroTagline: 'Modernise workflows, eliminate operational drag, and embed disciplined HR operating standards.',
+    isCoreAdvisory: true,
+    availability: 'Available at Launch',
     iconName: 'Cpu',
-    challengeHeadline: 'Payroll errors and disjointed systems drain organizational trust faster than any other failure.',
+    challengeHeadline: 'Clunky spreadsheets, manual handoffs, and disjointed tools drain HR bandwidth.',
     challengesAddressed: [
-      'Manual, error-prone payroll processing causing employee dissatisfaction and tax reconciliation friction.',
-      'Disjointed HR software tools that operate in silos without centralized analytics or reporting.',
-      'Ad-hoc compensation decisions lacking internal parity, market benchmarking, or grade alignment.',
-      'Opaque incentive structures that fail to incentivize high performance.',
-      'Lack of real-time workforce data to support strategic leadership decisions.'
+      'Manual, error-prone workflows across onboarding, leave, attendance, and exits.',
+      'Under-utilised HRMS software where teams resort back to offline Excel sheets.',
+      'SOPs that are either nonexistent, outdated, or ignored by regional managers.',
+      'Inconsistent employee lifecycle data producing unreliable management reports.',
+      'Disjointed communication that leaves employees confused about basic policies.',
+    ],
+    whatGoodLooksLike: [
+      'Streamlined, touchless employee lifecycle workflows with clear SLAs.',
+      'High HRMS adoption rates with employee self-service functioning smoothly.',
+      'Standard Operating Procedures that are living, referenced documents across units.',
+      'Single source of truth for employee records, payroll inputs, and reporting.',
     ],
     whyItMatters: [
-      'Compensation is both the single largest operational expenditure of most knowledge-driven enterprises and the most immediate reflection of how an organisation values its people. Disorganized payroll or arbitrary salary bands breed quiet resentment and talent leakage.',
-      'By coupling competitive compensation architecture with automated, reliable HR tech workflows, Merit & Beyond helps companies build an infrastructure where payroll runs with precision and compensation actively reinforces business goals.'
+      'Operational inefficiencies in HR do not just frustrate HR personnel—they erode candidate confidence, cause payroll disputes, and slow manager productivity.',
+      'Systematic process optimisation creates reliable, auditable operations that scale effortlessly as your headcount expands across locations.',
     ],
-    specificSupport: [
-      {
-        area: 'HRMS Evaluation & Implementation Oversight',
-        items: [
-          'Requirement gathering, vendor evaluation, and objective HRMS software selection.',
-          'Data sanitization, workflow configuration, and migration project management.',
-          'Integration oversight across attendance, leaves, payroll, and performance modules.'
-        ]
-      },
-      {
-        area: 'Compensation & Benefits Architecture',
-        items: [
-          'Design of standardized salary bands, grade structures, and pay-range matrices.',
-          'Total rewards benchmarking against industry and regional peer standards.',
-          'Variable pay, bonus schemas, and performance-linked incentive (PLI) design.'
-        ]
-      },
-      {
-        area: 'Payroll Process Re-engineering & Analytics',
-        items: [
-          'End-to-end audit and optimization of the monthly payroll cycle.',
-          'Statutory deduction validation (TDS, PF, ESI, LWF, PT).',
-          'Executive dashboards for headcount cost, attrition trends, and compensation ratios.'
-        ]
-      }
+    potentialFocusAreas: [
+      'HR process mapping and redesign',
+      'SOPs, forms, workflows and controls',
+      'HRMS process and adoption review',
+      'Data quality and reporting routines',
+      'Change communication and implementation support',
     ],
-    scopeAndApproach: 'We serve as unbiased technical advisors and compensation strategists. We do not sell proprietary software licenses; instead, we help you select and orchestrate the right platforms and compensation frameworks that fit your operational budget and future growth trajectory.',
+    deliverables: [
+      'End-to-End HR Process Map & Friction Analysis',
+      'Standardised SOP Repository & Lifecycle Workflow Guides',
+      'HRMS Optimisation Matrix & Feature Utilisation Roadmap',
+      'Change Management & Employee Communication Toolkits',
+    ],
+    engagementOptions: [
+      'Process Sprint (4–6 week focused workflow transformation)',
+      'Enterprise HR Transformation (Comprehensive 3–6 month systems overhaul)',
+      'HRMS Implementation Advisory (Vendor-neutral process mapping and adoption audit)',
+    ],
+    scopeAndApproach: 'We combine rigorous process mapping with change management psychology, ensuring that new digital workflows are embraced and sustained.',
     fiveStageApproach: [
       {
-        stage: 'Understand',
-        title: 'Technology & Pay Baseline',
-        description: 'Cataloging your current software tech stack, payroll steps, compensation anomalies, and managerial pain points.'
+        stage: 'Discover',
+        title: 'Workflow Mapping',
+        description: 'Map existing lifecycle processes across recruiting, onboarding, daily operations, and departures.',
       },
       {
-        stage: 'Assess',
-        title: 'Gap Analysis & Benchmarking',
-        description: 'Evaluating system bottlenecks, data integrity, payroll processing times, and internal/external pay parity.'
+        stage: 'Diagnose',
+        title: 'Bottleneck & Waste Diagnostics',
+        description: 'Quantify processing delays, manual redundancies, data handoff breaks, and user friction points.',
       },
       {
         stage: 'Design',
-        title: 'Framework & Workflow Architecture',
-        description: 'Formulating structured grade bands, compensation rubrics, and automated HRMS integration workflows.'
+        title: 'Optimised Operating Architecture',
+        description: 'Re-engineer workflows for minimum friction, define SOPs, control points, and self-service protocols.',
       },
       {
-        stage: 'Implement',
-        title: 'System Deployment & Payroll Run',
-        description: 'Executing parallel payroll validation runs, configuring approval matrices, and conducting user adoption training.'
+        stage: 'Deliver',
+        title: 'Implementation & Enablement',
+        description: 'Configure systems, conduct manager/HR enablement workshops, and roll out standardized documentation.',
       },
       {
-        stage: 'Strengthen',
-        title: 'Analytics & Continuous Calibration',
-        description: 'Establishing automated people analytics dashboards and conducting annual compensation review calibrations.'
-      }
+        stage: 'Demonstrate',
+        title: 'SLA & Adoption Verification',
+        description: 'Measure turnaround times, error reduction, user adoption scores, and calibrate workflows based on usage.',
+      },
     ],
-    expectedOutcomes: [
-      '100% accurate, stress-free monthly payroll cycles with auditable tax reconciliation.',
-      'Equitable, transparent compensation bands that streamline talent hiring and promotion decisions.',
-      'A cohesive HRMS that eliminates duplicate administrative tasks.',
-      'Executive-level visibility into compensation expenditures and workforce metrics.'
+    faqs: [
+      {
+        question: 'Do you implement specific HRMS software or are you independent?',
+        answer: 'We are completely vendor-neutral. We help you design the underlying processes, define functional requirements, or optimise whichever platform you currently use (e.g. Darwinbox, Keka, Zoho, greytHR, Workday).',
+      },
+      {
+        question: 'How do you ensure employees and managers actually follow the new SOPs?',
+        answer: 'We design concise, role-specific job aids and run interactive walkthroughs rather than handing over 100-page policy binders that nobody reads.',
+      },
     ],
-    relatedServiceSlugs: [
-      'labour-law-compliance-people-audits',
-      'talent-acquisition-talent-management'
-    ]
+    relatedServiceSlugs: ['strategic-hr-consulting', 'hr-technology-analytics', 'labour-law-compliance-audits'],
   },
   {
-    id: 'relations',
+    id: 'labour-law-compliance-audits',
     categoryNumber: '04',
-    slug: 'employee-relations-workplace-effectiveness',
-    title: 'Employee Relations & Workplace Effectiveness',
-    shortSubtitle: 'Grievances, conflict management, disciplinary processes, performance and engagement',
-    discoverySummary: 'Grievances, workplace conflict, performance management and employee engagement.',
-    heroTagline: 'Fostering equitable workplace dynamics, psychological safety, and high-performance cultures.',
-    iconName: 'Users',
-    challengeHeadline: 'Unresolved workplace conflict quietly dismantles morale, retention, and executive credibility.',
+    slug: 'labour-law-compliance-audits',
+    title: 'Labour Law Compliance & HR Audits',
+    shortSubtitle: 'Identify potential documentation, process and governance gaps within a clearly defined review scope.',
+    discoverySummary: 'Structured audits of statutory registers, employment contracts, vendor compliance, and risk registers.',
+    heroTagline: 'Meticulous review of statutory registers, documentation, and people risk management.',
+    isCoreAdvisory: true,
+    availability: 'Available at Launch',
+    iconName: 'ShieldCheck',
+    challengeHeadline: 'Statutory non-compliance is an invisible liability until a notice arrives.',
     challengesAddressed: [
-      'Inconsistent grievance resolution leading to escalating toxicity and legal disputes.',
-      'Subjective or combative performance appraisal conversations that alienate top talent.',
-      'Inadequate documentation for disciplinary actions or termination decisions.',
-      'Absence of impartial mediation during senior-level workplace disagreements.',
-      'Low employee engagement and disconnect between frontline teams and leadership vision.'
+      'Incomplete statutory registers, returns, or documentation across state jurisdictions.',
+      'Contract labour and third-party vendor compliance gaps creating co-employment exposures.',
+      'Ambiguities in employment agreements, confidentiality covenants, and termination clauses.',
+      'Non-alignment with evolving state and national labour codes and local notifications.',
+      'Absence of an internal audit trail and preventive compliance calendar.',
+    ],
+    whatGoodLooksLike: [
+      'A comprehensive, prioritized gap register with clear risk ratings (Critical, High, Advisory).',
+      'Verified statutory registers, returns, and digital archives meeting current state requirements.',
+      'Robust third-party vendor compliance checklists and audit governance routines.',
+      'Trained internal HR staff who understand statutory timelines and filing standards.',
     ],
     whyItMatters: [
-      'The cultural health of an enterprise is tested during difficult conversations: underperformance, disciplinary incidents, and structural change. Mishandling these moments damages brand reputation and exposes the firm to severe legal liability.',
-      'A robust employee relations framework replaces emotional volatility with procedural fairness. It provides leaders with the tools and confidence to address performance issues constructively while ensuring employees feel heard and respected.'
+      'Labour law non-compliance carries severe financial penalties, operational stoppages, and reputational risk. Furthermore, institutional investors and enterprise clients mandate clean compliance records during due diligence.',
+      'Proactive audits convert reactive panic into structured, documented peace of mind.',
     ],
-    specificSupport: [
-      {
-        area: 'Grievance Redressal & Mediation',
-        items: [
-          'Design of multi-tier, confidential grievance management mechanisms.',
-          'Impartial mediation support for sensitive workplace conflicts and peer friction.',
-          'Advisory on POSH (Prevention of Sexual Harassment) compliance and Internal Committee (IC) support.'
-        ]
-      },
-      {
-        area: 'Performance Enablement & PIP Frameworks',
-        items: [
-          'Structured Performance Improvement Plan (PIP) protocols with objective milestone tracking.',
-          'Managerial coaching for conducting compassionate, constructive feedback discussions.',
-          'Transformation of annual appraisal fatigue into continuous performance dialogue.'
-        ]
-      },
-      {
-        area: 'Disciplinary Governance & Engagement',
-        items: [
-          'Legally defensible documentation templates for show-cause notices and inquiry proceedings.',
-          'Employee pulse survey frameworks and actionable sentiment analytics.',
-          'Culture preservation initiatives during organizational restructuring or mergers.'
-        ]
-      }
+    potentialFocusAreas: [
+      'Defined-scope HR documentation review',
+      'Statutory process and records checklist',
+      'Gap register and risk prioritisation',
+      'Corrective-action tracker and ownership',
+      'Coordination with qualified legal/statutory specialists where required',
     ],
-    scopeAndApproach: 'We provide strategic guidance and operational balance. Working closely with business leaders and people managers, we resolve workplace impasses with empathy and legal precision, safeguarding organizational harmony without sacrificing operational standards.',
+    deliverables: [
+      'Confidential HR Compliance Audit Report & Executive Risk Matrix',
+      'Statutory Records & Registers Verification Checklist',
+      'Prioritised Corrective Action Tracker (CAPA) with Timelines',
+      'Annual Statutory Compliance Calendar & Vendor Review Framework',
+    ],
+    engagementOptions: [
+      'Comprehensive Baseline Audit (One-time multi-jurisdiction diagnostic)',
+      'Vendor & Contract Labour Compliance Review (Focused supply-chain audit)',
+      'Periodic Compliance Health-Check (Bi-annual or quarterly surveillance)',
+    ],
+    scopeAndApproach: 'We conduct rigorous, evidence-based reviews of files, registers, returns, and agreements, highlighting discrepancies and building practical remediation pathways.',
     fiveStageApproach: [
       {
-        stage: 'Understand',
-        title: 'Cultural Sentiment Scoping',
-        description: 'Analyzing grievance histories, exit interview themes, leadership dynamics, and engagement trends.'
+        stage: 'Discover',
+        title: 'Scope & Document Ingestion',
+        description: 'Define exact review boundaries, operational entities, locations, applicable statutes, and ingest records.',
       },
       {
-        stage: 'Assess',
-        title: 'Procedural Vulnerability Review',
-        description: 'Evaluating current disciplinary protocols, performance dispute mechanisms, and committee readiness.'
+        stage: 'Diagnose',
+        title: 'Forensic Audit & Gap Identification',
+        description: 'Scrutinize registers, filings, employee files, contractor agreements, and wage registers against statutory codes.',
       },
       {
         stage: 'Design',
-        title: 'Effectiveness & Relations Framework',
-        description: 'Crafting comprehensive grievance SOPs, PIP blueprints, POSH guidelines, and manager enablement toolkits.'
+        title: 'Risk Register & Remediation Plan',
+        description: 'Categorize identified gaps by legal severity, financial exposure, and build a phased corrective-action plan.',
       },
       {
-        stage: 'Implement',
-        title: 'Managerial Enablement Workshops',
-        description: 'Conducting immersive workshops for managers on conflict mediation, constructive feedback, and fair documentation.'
+        stage: 'Deliver',
+        title: 'Remediation Oversight',
+        description: 'Guide HR teams in updating registers, standardizing agreements, and coordinating statutory filings.',
       },
       {
-        stage: 'Strengthen',
-        title: 'Ongoing Advisory & Health Monitoring',
-        description: 'On-call advisory support for complex case resolution and periodic pulse review check-ins.'
-      }
+        stage: 'Demonstrate',
+        title: 'Verification & Governance Protocol',
+        description: 'Re-audit remediated areas, establish internal controls, and hand over a sustainable compliance tracker.',
+      },
     ],
-    expectedOutcomes: [
-      'Equitable, legally protected resolution of workplace grievances and disputes.',
-      'Consistent, objective management of underperformance without acrimony.',
-      'Higher psychological safety and measurable improvements in team engagement scores.',
-      'Protected organizational reputation through procedurally sound HR governance.'
+    statutoryDisclaimer: 'Important Note: Our compliance reviews identify operational, documentation, and process gaps within a defined advisory scope. These reviews do not constitute a legal guarantee of compliance, certification, or a substitute for formal legal counsel.',
+    faqs: [
+      {
+        question: 'Is this audit legally binding or does it replace formal legal counsel?',
+        answer: 'No. As stated in our governance controls, compliance reviews are operational management audits designed to identify procedural and documentation gaps. They do not constitute formal legal opinions or legal advice. Where specialized statutory legal defense is required, we coordinate with your qualified legal counsel.',
+      },
+      {
+        question: 'Can you audit third-party staffing vendors and security contractors?',
+        answer: 'Yes. Contract labour compliance is a critical risk area. We audit PF, ESI, wage registers, and statutory licenses of third-party vendors to safeguard against principal employer liability.',
+      },
     ],
-    relatedServiceSlugs: [
-      'people-advisory-organisation-setup',
-      'corporate-training-capability-development'
-    ]
+    relatedServiceSlugs: ['strategic-hr-consulting', 'hr-transformation', 'fractional-chro'],
   },
   {
-    id: 'talent',
+    id: 'organisational-development',
     categoryNumber: '05',
-    slug: 'talent-acquisition-talent-management',
-    title: 'Talent Acquisition & Talent Management',
-    shortSubtitle: 'Recruitment strategy, critical hiring, talent mapping, succession planning and retention',
-    discoverySummary: 'Recruitment strategy, critical hiring, talent development and succession planning.',
-    heroTagline: 'Attracting, cultivating, and retaining the strategic talent that propels your business ahead.',
+    slug: 'organisational-development',
+    title: 'Organisational Development & Effectiveness',
+    shortSubtitle: 'Strengthen performance frameworks, leadership effectiveness, talent processes and employee experience.',
+    discoverySummary: 'Aligning performance management, competency frameworks, talent development, and culture systems.',
+    heroTagline: 'Build resilient teams, cultivate capable leaders, and turn performance systems into execution engines.',
+    isCoreAdvisory: true,
+    availability: 'Available at Launch',
     iconName: 'Target',
-    challengeHeadline: 'Hiring the wrong personnel costs fortunes; failing to retain key leaders costs the future.',
+    challengeHeadline: 'Performance processes exist on paper, but meaningful conversations don’t happen.',
     challengesAddressed: [
-      'Protracted time-to-hire for critical leadership and specialized roles slowing down execution.',
-      'Reliance on reactive, transactional recruiters who fail to articulate your employer value proposition.',
-      'Premature attrition among high-potential employees within their first 12 months.',
-      'Absence of succession planning for pivotal business-critical roles.',
-      'Subjective interview processes resulting in inconsistent hiring quality and cultural misalignment.'
+      'Appraisal systems viewed as bureaucratic annual tick-box exercises by managers.',
+      'KPIs and goal-setting frameworks that fail to reflect actual business performance drivers.',
+      'Managers lacking the skill and confidence to hold structured, constructive feedback discussions.',
+      'High turnover among top performers due to unclear career progression and recognition.',
+      'Siloed departments leading to cross-functional conflict and diluted accountability.',
+    ],
+    whatGoodLooksLike: [
+      'Transparent, usable goal-setting frameworks (KPI/OKR) aligned with business milestones.',
+      'Regular, evidence-based review conversations between managers and their teams.',
+      'Clear competency and career progression pathways that retain high-calibre talent.',
+      'Strong team cohesion and measurable improvement in employee engagement indicators.',
     ],
     whyItMatters: [
-      'In a competitive commercial landscape, access to superior talent is the ultimate competitive differentiator. Yet most organisations treat recruitment as an administrative panic rather than an ongoing strategic capability.',
-      'Merit & Beyond transforms talent management into a proactive discipline. We help companies articulate a compelling employer brand, design competency-based selection processes, and build retention pathways that safeguard institutional knowledge.'
+      'Organisational effectiveness is not about soft motivational speeches; it is about building the habits, frameworks, and managerial capability that drive disciplined execution.',
+      'When performance systems are intuitive and managers are trained in real conversation dynamics, accountability improves organically.',
     ],
-    specificSupport: [
-      {
-        area: 'Strategic Recruitment & Critical Hiring Advisory',
-        items: [
-          'Design of structured interview processes, competency rubrics, and candidate scorecards.',
-          'Advisory on executive search, leadership profiling, and market compensation expectations.',
-          'Employer Value Proposition (EVP) development and candidate journey optimization.'
-        ]
-      },
-      {
-        area: 'Talent Mapping & Pipeline Building',
-        items: [
-          'Competitor talent mapping for high-impact functional and leadership roles.',
-          'Creation of proactive talent communities to reduce critical-role vacancies.',
-          'Assessment center frameworks for evaluating situational judgment and culture add.'
-        ]
-      },
-      {
-        area: 'Succession Planning & Retention Architecture',
-        items: [
-          'Identification of single-point-of-failure roles and 9-box talent matrix deployment.',
-          'High-potential (HiPo) identification, career pathway mapping, and retention roadmaps.',
-          'Stay-interview frameworks and early-warning attrition mitigation strategies.'
-        ]
-      }
+    potentialFocusAreas: [
+      'Performance management and goal-setting frameworks',
+      'Leadership and manager effectiveness',
+      'Talent, succession and development processes',
+      'Employee experience and engagement practices',
+      'Team effectiveness and organisational change',
     ],
-    scopeAndApproach: 'We do not operate as a volume resume clearinghouse. We partner as strategic talent advisors, restructuring your internal hiring capability, training your hiring managers to evaluate candidates rigorously, and designing succession plans that ensure business continuity.',
+    deliverables: [
+      'Usable Performance Management Framework (KPI/OKR Design & Review Guide)',
+      'Leadership & Manager Conversation Toolkits (Feedback, Goal Setting, Coaching)',
+      'Talent Matrix (9-Box) & Critical Role Succession Blueprint',
+      'Employee Experience & Engagement Survey Architecture',
+    ],
+    engagementOptions: [
+      'Performance System Redesign (8–10 week overhaul and enablement)',
+      'Manager Effectiveness Cohorts (Integrated consulting and applied workshops)',
+      'Culture & Engagement Intervention (Diagnostic survey and action roadmap)',
+    ],
+    scopeAndApproach: 'We align strategic outcomes with practical human behaviors, giving leaders and managers concrete tools they can apply immediately in daily operations.',
     fiveStageApproach: [
       {
-        stage: 'Understand',
-        title: 'Business Horizon & Talent Demands',
-        description: 'Mapping your commercial milestones against required competencies, critical headcount needs, and existing leadership bench strength.'
+        stage: 'Discover',
+        title: 'Culture & Performance Diagnostics',
+        description: 'Analyze current appraisal data, employee feedback, manager sentiment, and leadership expectations.',
       },
       {
-        stage: 'Assess',
-        title: 'Hiring Funnel & Bench Diagnostics',
-        description: 'Auditing current recruitment velocity, source-of-hire metrics, candidate drop-offs, and flight-risk leadership dependencies.'
+        stage: 'Diagnose',
+        title: 'Friction & Capability Assessment',
+        description: 'Identify where goal-setting breaks down, why reviews feel artificial, and where capability gaps lie.',
       },
       {
         stage: 'Design',
-        title: 'Talent Strategy & Selection Architecture',
-        description: 'Developing tailored EVP narratives, structured evaluation rubrics, onboarding roadmaps, and succession frameworks.'
+        title: 'Usable Framework Architecture',
+        description: 'Design intuitive performance cycles, pragmatic review templates, and transparent progression criteria.',
       },
       {
-        stage: 'Implement',
-        title: 'Hiring Capability Rollout',
-        description: 'Training hiring managers on behavioral interviewing, launching scorecard systems, and running talent-mapping sprints.'
+        stage: 'Deliver',
+        title: 'Manager & Team Enablement',
+        description: 'Conduct applied workshops on setting measurable KPIs and facilitating objective review discussions.',
       },
       {
-        stage: 'Strengthen',
-        title: 'Retention & Succession Review',
-        description: 'Facilitating bi-annual succession roundtables and reviewing key-talent retention metrics with the executive board.'
-      }
+        stage: 'Demonstrate',
+        title: 'Calibration & Impact Review',
+        description: 'Facilitate executive calibration sessions, analyze performance distribution, and refine frameworks.',
+      },
     ],
-    expectedOutcomes: [
-      'Substantial reduction in time-to-productivity and new-hire churn.',
-      'Consistent, objective hiring decisions driven by structured competency scorecards.',
-      'Documented, active succession pipelines for all mission-critical roles.',
-      'A differentiated employer brand that attracts top-tier talent organically.'
+    faqs: [
+      {
+        question: 'How do you connect performance management with corporate learning?',
+        answer: 'Our Organisational Development consulting directly links with our practical learning programs, such as our flagship workshop "Performance Management in Practice", ensuring frameworks are immediately applied.',
+      },
+      {
+        question: 'Can you help redesign our OKR or KPI metrics?',
+        answer: 'Yes. We specialize in turning vague goals ("improve communication") into sharp, measurable performance indicators with clear accountability.',
+      },
     ],
-    relatedServiceSlugs: [
-      'people-advisory-organisation-setup',
-      'corporate-training-capability-development'
-    ]
+    relatedServiceSlugs: ['compensation-performance', 'strategic-hr-consulting', 'talent-employee-experience'],
   },
   {
-    id: 'training',
+    id: 'compensation-performance',
     categoryNumber: '06',
-    slug: 'corporate-training-capability-development',
-    title: 'Corporate Training & Capability Development',
-    shortSubtitle: 'Leadership, managerial effectiveness, communication, people operations and customised training',
-    discoverySummary: 'Leadership development, manager effectiveness and corporate training.',
-    heroTagline: 'Transforming technical experts into impactful leaders and building resilient workforce capabilities.',
-    iconName: 'GraduationCap',
-    challengeHeadline: 'Promoting top performers without managerial training creates frustrated teams and disengaged managers.',
+    slug: 'compensation-performance',
+    title: 'Compensation, Benefits & Performance',
+    shortSubtitle: 'Salary structures, compensation review support, KPI/KRA/OKR design and performance-review governance.',
+    discoverySummary: 'Designing competitive compensation bands, incentive models, and performance-linked rewards.',
+    heroTagline: 'Equitable, competitive reward structures that drive high performance and fiscal discipline.',
+    isCoreAdvisory: false,
+    availability: 'Available at Launch',
+    iconName: 'BarChart3',
+    challengeHeadline: 'Unstructured compensation breeds internal inequity and costly talent churn.',
     challengesAddressed: [
-      'First-time and mid-level managers struggling to transition from individual contributors to team leaders.',
-      'Communication breakdowns between cross-functional teams impairing velocity and morale.',
-      'Superficial, one-day training workshops that result in zero lasting behavioral change.',
-      'HR and operations teams lacking deep knowledge of labour compliance, payroll intricacies, and modern HR tools.',
-      'Absence of tailored capability roadmaps aligned to organisational scaling requirements.'
+      'Haphazard salary negotiations during hiring causing wide internal wage disparities.',
+      'Incentive and bonus schemes that do not correlate with actual business profitability.',
+      'Lack of market benchmark visibility leading to underpaying key roles or overpaying averages.',
+      'Annual increment cycles conducted without objective performance data or governance.',
+      'Tax-inefficient compensation structuring causing dissatisfaction among employees.',
+    ],
+    whatGoodLooksLike: [
+      'Graded salary bands with clear minimum, midpoint, and maximum parameters.',
+      'Performance-linked incentive frameworks with transparent qualification criteria.',
+      'Internal pay equity backed by objective job evaluation benchmarks.',
+      'A predictable, fiscally modeled annual compensation review cycle.',
     ],
     whyItMatters: [
-      'Organisations do not rise to the level of their aspirations; they fall to the level of their managerial capability. Employees join companies for their brand and vision, but they leave managers who lack communication, empathy, and leadership skills.',
-      'Our capability development programmes are grounded in adult learning principles, real workplace scenarios, and measurable behavioral milestones. We build enduring organizational muscle that delivers continuous commercial value.'
+      'Compensation is your single largest operational investment. A disciplined framework protects company finances while making employees feel valued and fairly recognized.',
+      'Fair, transparent reward governance is the strongest antidote to unwanted employee attrition.',
     ],
-    specificSupport: [
-      {
-        area: 'Leadership & Managerial Effectiveness',
-        items: [
-          'Emerging Leaders transition programmes for first-time and mid-level managers.',
-          'Crucial conversations: feedback delivery, performance reviews, and delegation.',
-          'Strategic decision-making, emotional intelligence, and executive presence coaching.'
-        ]
-      },
-      {
-        area: 'Functional HR & Operations Mastery',
-        items: [
-          'Practical training on statutory labour laws, inspections, and compliance documentation.',
-          'Payroll masterclasses: tax structures, statutory filings, and error-free processing.',
-          'People operations excellence: employee lifecycle workflow optimization.'
-        ]
-      },
-      {
-        area: 'Customised Corporate Capability Programmes',
-        items: [
-          'Cross-functional collaboration, active listening, and business communication workshops.',
-          'Culture reinforcement and customer-centric mindset workshops.',
-          'Post-training coaching pods, behavioral reinforcement tools, and impact metrics.'
-        ]
-      }
+    potentialFocusAreas: [
+      'Salary structures and grading architecture',
+      'Compensation review and annual increment modelling',
+      'KPI, KRA, and OKR incentive linking',
+      'Performance-review governance and calibration',
+      'Benefits and variable pay structuring',
     ],
-    scopeAndApproach: 'We eschew generic slide-deck lectures in favor of interactive case studies, role-play simulations, and cohort-based application projects. Every programme is contextualized to your specific industry dynamics and company challenges.',
+    deliverables: [
+      'Custom Salary Band Architecture & Job Grading Table',
+      'Variable Pay & Performance Incentive Scheme Documents',
+      'Annual Increment Financial Simulation Model',
+      'Compensation Governance & Review Committee Guidelines',
+    ],
+    engagementOptions: [
+      'Compensation Restructuring Project (6–8 weeks)',
+      'Incentive Plan Design Sprint (4 weeks)',
+      'Annual Increment Advisory & Calibration Support',
+    ],
+    scopeAndApproach: 'We combine financial modeling with talent psychology to build compensation structures that are fiscally responsible and motivating.',
     fiveStageApproach: [
       {
-        stage: 'Understand',
-        title: 'Learning Needs Analysis (LNA)',
-        description: 'Conducting capability interviews with leadership and participants to diagnose exact behavioral and skill gaps.'
+        stage: 'Discover',
+        title: 'Compensation Audit',
+        description: 'Ingest payroll registers, job grades, incentive rules, and current cost distributions.',
       },
       {
-        stage: 'Assess',
-        title: 'Baseline Competency Evaluation',
-        description: 'Measuring pre-training capability baselines through 180/360-degree feedback and situational assessments.'
+        stage: 'Diagnose',
+        title: 'Equity & Market Gap Analysis',
+        description: 'Identify internal pay anomalies, market competitiveness gaps, and cost leakage points.',
       },
       {
         stage: 'Design',
-        title: 'Curriculum & Case Customization',
-        description: 'Developing bespoke learning modules, real-world case simulations, and actionable participant toolkits.'
+        title: 'Band & Incentive Architecture',
+        description: 'Build structured pay grades, tax-efficient structures, and measurable variable pay rules.',
       },
       {
-        stage: 'Implement',
-        title: 'Interactive Delivery & Practicums',
-        description: 'Facilitating high-impact interactive workshops supported by peer accountability pods and practical on-the-job assignments.'
+        stage: 'Deliver',
+        title: 'Budget Modeling & Transition',
+        description: 'Model transition costs, simulate increment scenarios, and equip leadership with communication scripts.',
       },
       {
-        stage: 'Strengthen',
-        title: 'Behavioral Impact & Refresher Reviews',
-        description: 'Conducting 60-day and 90-day impact evaluations with managers to measure sustained behavior shift and ROI.'
-      }
+        stage: 'Demonstrate',
+        title: 'Cycle Governance Review',
+        description: 'Oversee the first increment/bonus calibration cycle and verify budget variance.',
+      },
     ],
-    expectedOutcomes: [
-      'Empowered, confident people managers who inspire performance and retain high performers.',
-      'Clear, empathetic communication across departments reducing operational bottlenecks.',
-      'Internal HR and operational teams possessing mastery over compliance and payroll execution.',
-      'Measurable behavioral shift tracked through structured post-programme evaluation.'
+    faqs: [
+      {
+        question: 'Do we need a massive salary benchmark survey to fix our pay structure?',
+        answer: 'Not necessarily. For most growing and mid-market firms, internal consistency, clear job bands, and targeted industry benchmarks provide immediate clarity without expensive multi-month surveys.',
+      },
     ],
-    relatedServiceSlugs: [
-      'employee-relations-workplace-effectiveness',
-      'talent-acquisition-talent-management'
-    ]
-  }
+    relatedServiceSlugs: ['organisational-development', 'strategic-hr-consulting'],
+  },
+  {
+    id: 'hr-technology-analytics',
+    categoryNumber: '07',
+    slug: 'hr-technology-analytics',
+    title: 'HR Technology, Digital HR & Analytics',
+    shortSubtitle: 'HRMS process design, requirements mapping, adoption, data quality, dashboard definitions and reporting routines.',
+    discoverySummary: 'Mapping HRMS requirements, ensuring platform adoption, data governance, and executive HR metrics.',
+    heroTagline: 'Turn HR software from a cost centre into an actionable workforce decision platform.',
+    isCoreAdvisory: false,
+    availability: 'Available at Launch',
+    iconName: 'Cpu',
+    challengeHeadline: 'Having software is not the same as having reliable people intelligence.',
+    challengesAddressed: [
+      'Low software utilization where employees and managers avoid self-service modules.',
+      'Purchasing software before defining operational requirements and workflows.',
+      'Siloed people data spread across multiple incompatible tools and spreadsheets.',
+      'Leadership inability to extract basic turnover, headcount, or cost metrics quickly.',
+      'Poor data hygiene resulting from missing validation rules and manual overrides.',
+    ],
+    whatGoodLooksLike: [
+      'An HR technology stack aligned precisely with operational processes.',
+      'Executive dashboard delivering accurate headcount, attrition, and cost trends in real time.',
+      'High self-service adoption with minimal HR manual intervention for basic requests.',
+      'Strict data privacy and access controls governing employee records.',
+    ],
+    whyItMatters: [
+      'Technology amplifies existing processes. If workflows are broken, digital tools merely accelerate confusion. Designing the process first ensures your HR technology delivers tangible ROI.',
+      'Clean workforce analytics allow leaders to make informed talent investments rather than operating on assumptions.',
+    ],
+    potentialFocusAreas: [
+      'HRMS process design and workflows',
+      'Requirements mapping and vendor evaluation',
+      'System adoption and self-service enablement',
+      'Data quality, governance and privacy',
+      'Dashboard definitions and executive reporting routines',
+    ],
+    deliverables: [
+      'HR Technology Requirements Specification & RFQ Document',
+      'System Configuration & Workflow Blueprint',
+      'Executive People Analytics Dashboard Architecture',
+      'Data Governance Policy & User Role Access Matrix',
+    ],
+    engagementOptions: [
+      'HRMS Selection & Requirements Advisory (4–6 weeks)',
+      'Adoption & Data Quality Overhaul (4 weeks)',
+      'HR Analytics & Reporting Dashboard Build',
+    ],
+    scopeAndApproach: 'We act as your independent client-side advocate—we do not sell software, we ensure your technology works for your business.',
+    fiveStageApproach: [
+      {
+        stage: 'Discover',
+        title: 'Tech & Process Ingestion',
+        description: 'Map current digital tools, manual workarounds, license utilization, and user sentiment.',
+      },
+      {
+        stage: 'Diagnose',
+        title: 'Adoption & Data Audit',
+        description: 'Pinpoint feature drop-off, duplicate data entry, reporting lags, and configuration flaws.',
+      },
+      {
+        stage: 'Design',
+        title: 'Target Operating Architecture',
+        description: 'Specify business rules, workflow approvals, data definitions, and reporting metrics.',
+      },
+      {
+        stage: 'Deliver',
+        title: 'Configuration & Enablement',
+        description: 'Collaborate with software engineers/vendors, run user testing, and deliver manager video tutorials.',
+      },
+      {
+        stage: 'Demonstrate',
+        title: 'Adoption & Metric Tracking',
+        description: 'Track digital completion rates, self-service adoption, and deliver executive dashboard routines.',
+      },
+    ],
+    faqs: [
+      {
+        question: 'Do you represent or sell specific software?',
+        answer: 'No. As required by our brand standards, we maintain strict independence and do not resell vendor licenses or imply unverified vendor certifications.',
+      },
+    ],
+    relatedServiceSlugs: ['hr-transformation', 'strategic-hr-consulting'],
+  },
+  {
+    id: 'talent-employee-experience',
+    categoryNumber: '08',
+    slug: 'talent-employee-experience',
+    title: 'Talent, Employee Relations & Experience',
+    shortSubtitle: 'Talent and succession processes, employee relations frameworks, employee experience, engagement surveys, workplace awareness, wellness and team effectiveness.',
+    discoverySummary: 'Strengthening talent pipelines, resolving workplace friction, and elevating manager-employee trust.',
+    heroTagline: 'Build an authentic employee journey that attracts, engages, and protects top talent.',
+    isCoreAdvisory: false,
+    availability: 'Available at Launch',
+    iconName: 'Users',
+    challengeHeadline: 'Unresolved workplace grievances and disjointed talent practices erode trust.',
+    challengesAddressed: [
+      'Informal grievance handling resulting in escalating disputes or regulatory exposure.',
+      'Unstructured recruitment processes leading to mismatched hires and early attrition.',
+      'Absence of succession planning for business-critical operational and managerial roles.',
+      'Engagement surveys conducted without transparent follow-through or credible action plans.',
+      'Weak manager capability in resolving everyday interpersonal friction respectfully.',
+    ],
+    whatGoodLooksLike: [
+      'A fair, documented employee relations and grievance redressal framework.',
+      'Structured interview scorecards and recruitment workflows focused on capability.',
+      'Identified succession backups and development plans for mission-critical positions.',
+      'An authentic workplace culture where employee feedback leads to visible improvements.',
+    ],
+    whyItMatters: [
+      'Culture is defined by the worst behavior a leader tolerates and the consistency with which grievances are resolved. A fair, structured employee relations environment creates psychological safety.',
+      'Retaining proven talent is far more cost-effective than replacing critical departures.',
+    ],
+    potentialFocusAreas: [
+      'Talent and succession processes',
+      'Employee relations frameworks and grievance routines',
+      'Employee experience mapping and onboarding',
+      'Engagement surveys and action planning',
+      'Workplace awareness, wellness and team effectiveness',
+    ],
+    deliverables: [
+      'Fair Workplace Code & Grievance Redressal Protocol',
+      'Critical Role Succession Plan & Talent Risk Matrix',
+      'End-to-End Employee Journey Map & Touchpoint Playbook',
+      'Manager Employee Relations Toolkit & Disciplinary Guide',
+    ],
+    engagementOptions: [
+      'Employee Relations Framework Setup (4–6 weeks)',
+      'Succession & Critical Talent Sprint (4 weeks)',
+      'Workplace Climate Review & Resolution Facilitation',
+    ],
+    scopeAndApproach: 'We build practical frameworks that balance organizational discipline with dignity, fair hearing, and commercial reality.',
+    fiveStageApproach: [
+      {
+        stage: 'Discover',
+        title: 'Workplace Climate Ingestion',
+        description: 'Review grievance logs, exit interview patterns, tenure metrics, and employee touchpoints.',
+      },
+      {
+        stage: 'Diagnose',
+        title: 'Relations & Talent Diagnostic',
+        description: 'Identify recurrent friction zones, single-point talent dependencies, and onboarding drop-offs.',
+      },
+      {
+        stage: 'Design',
+        title: 'Policy & Process Blueprints',
+        description: 'Formulate transparent grievance mechanisms, structured hiring rubrics, and succession plans.',
+      },
+      {
+        stage: 'Deliver',
+        title: 'Supervisory Enablement',
+        description: 'Train managers on constructive dispute handling, documentation hygiene, and fair feedback.',
+      },
+      {
+        stage: 'Demonstrate',
+        title: 'Stability & Engagement Review',
+        description: 'Measure resolution cycle times, voluntary turnover reductions, and employee climate scores.',
+      },
+    ],
+    faqs: [
+      {
+        question: 'How do you handle sensitive employee grievances or investigations?',
+        answer: 'We provide structured frameworks, interview guides, and advisory oversight under strict confidentiality, ensuring natural justice and documented fairness.',
+      },
+    ],
+    relatedServiceSlugs: ['organisational-development', 'strategic-hr-consulting'],
+  },
 ];

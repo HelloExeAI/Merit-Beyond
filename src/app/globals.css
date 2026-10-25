@@ -1,23 +1,23 @@
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  --font-cormorant: 'Cormorant Garamond', Georgia, serif;
-  --font-jakarta: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
-  --bg-ivory: #F7EBDD;
-  --color-gold: #D7B77E;
-  --color-copper: #A96525;
-  --color-mahogany: #552A19;
-  --color-softblack: #171513;
+  --font-dm-serif: 'DM Serif Display', Georgia, serif;
+  --font-inter: 'Inter', system-ui, -apple-system, sans-serif;
+  --bg-ivory: #F3E9D8;
+  --color-charcoal: #29231D;
+  --color-gold: #B69A6A;
+  --color-navy: #26374B;
+  --color-sage: #E8EEE9;
 }
 
 body {
-  color: #171513;
-  background-color: #F7EBDD;
-  font-family: var(--font-jakarta);
+  color: #29231D;
+  background-color: #F3E9D8;
+  font-family: var(--font-inter);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
@@ -28,53 +28,30 @@ body {
   width: 8px;
 }
 ::-webkit-scrollbar-track {
-  background: #F7EBDD;
+  background: #F3E9D8;
 }
 ::-webkit-scrollbar-thumb {
-  background: #D7B77E;
+  background: #B69A6A;
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #A96525;
+  background: #846A3F;
 }
 
 /* Editorial typography utilities */
 .font-serif {
-  font-family: var(--font-cormorant);
+  font-family: var(--font-dm-serif);
 }
 
 .font-sans {
-  font-family: var(--font-jakarta);
+  font-family: var(--font-inter);
 }
 
-/* Elegant gold hairline borders */
-.border-gold-subtle {
-  border-color: rgba(215, 183, 126, 0.35);
+/* Scrollbar none utility */
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
 }
-
-.border-gold-medium {
-  border-color: rgba(215, 183, 126, 0.7);
-}
-
-/* Premium background textures */
-.bg-ivory-gradient {
-  background: linear-gradient(180deg, #FFFFFF 0%, #FAF4EC 50%, #F7EBDD 100%);
-}
-
-.bg-mahogany-gradient {
-  background: linear-gradient(135deg, #442013 0%, #552A19 50%, #3D1C10 100%);
-}
-
-.gold-shimmer {
-  background: linear-gradient(90deg, #D7B77E 0%, #FAF5EE 50%, #D7B77E 100%);
-  background-size: 200% auto;
-  color: transparent;
-  -webkit-background-clip: text;
-  background-clip: text;
-}
-
-/* Focus styles for accessibility */
-a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible {
-  outline: 2px solid #A96525;
-  outline-offset: 2px;
+.scrollbar-none {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }

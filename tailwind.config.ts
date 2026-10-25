@@ -5,69 +5,80 @@ const config: Config = {
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/data/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
     extend: {
       colors: {
+        // Master Document Design System Palette
         ivory: {
-          50: "#FCF8F3",
-          100: "#F7EBDD", // Primary background
-          200: "#EEDBC4",
-          300: "#E3C8A7",
-          DEFAULT: "#F7EBDD",
+          50: "#FAF5ED",
+          100: "#F3E9D8", // Master Warm Ivory
+          200: "#EADCC5",
+          300: "#DEC8A9",
+          DEFAULT: "#F3E9D8",
         },
-        champagne: {
-          50: "#F9F5EC",
-          100: "#F1E5D0",
-          200: "#E8D5B0",
-          300: "#DEC28E",
-          400: "#D7B77E", // Accents and borders
-          500: "#C5A56C",
-          600: "#A8874F",
-          DEFAULT: "#D7B77E",
+        charcoal: {
+          50: "#4A4139",
+          100: "#3D352E",
+          200: "#332B25",
+          DEFAULT: "#29231D", // Master Primary text, dark sections & footer
+          dark: "#1E1914",
         },
+        gold: {
+          50: "#F9F6F0",
+          100: "#EFE6D4",
+          200: "#E1D0AF",
+          300: "#CEB587",
+          DEFAULT: "#B69A6A", // Master Champagne Gold
+          500: "#9E8152",
+          600: "#846A3F",
+        },
+        navy: {
+          50: "#F0F4F8",
+          100: "#D6E0EB",
+          200: "#9EB6D0",
+          DEFAULT: "#26374B", // Master Executive Navy (Strategy, advisory, analytics)
+          800: "#1A2635",
+          900: "#101923",
+        },
+        sage: {
+          50: "#F6F8F6",
+          100: "#E8EEE9", // Master Soft Sage (Learning & capability development)
+          200: "#D4DFD6",
+          300: "#B8C8BC",
+          DEFAULT: "#E8EEE9",
+        },
+        // Complementary Accent Tokens
         copper: {
           50: "#FAF0E7",
           100: "#F2D8C0",
-          200: "#E2B38A",
           300: "#CF8C53",
-          400: "#BE7534",
-          500: "#A96525", // Buttons and highlights
+          DEFAULT: "#A96525", // Action Buttons and highlights
           600: "#8C511B",
           700: "#6B3D14",
-          DEFAULT: "#A96525",
         },
         mahogany: {
-          100: "#D7B5A7",
-          200: "#B8806A",
-          300: "#8D4D34",
-          400: "#6B3520",
-          500: "#552A19", // Headings and emphasis
+          DEFAULT: "#552A19", // Headings & brand contrast
           600: "#442013",
           700: "#34170D",
-          DEFAULT: "#552A19",
         },
         softblack: {
-          DEFAULT: "#171513", // Body text and navigation
-          light: "#2B2724",
-          muted: "#4A4540",
+          DEFAULT: "#29231D",
         },
       },
       fontFamily: {
-        serif: ["var(--font-cormorant)", "Georgia", "serif"],
-        sans: ["var(--font-jakarta)", "system-ui", "sans-serif"],
+        serif: ["var(--font-dm-serif)", "Georgia", "serif"],
+        sans: ["var(--font-inter)", "system-ui", "-apple-system", "sans-serif"],
       },
       boxShadow: {
-        'subtle': '0 4px 20px -2px rgba(85, 42, 25, 0.05)',
-        'elevated': '0 10px 30px -4px rgba(85, 42, 25, 0.08), 0 4px 12px -2px rgba(85, 42, 25, 0.04)',
-        'gold-glow': '0 0 25px rgba(215, 183, 126, 0.25)',
+        subtle: "0 2px 10px rgba(41, 35, 29, 0.04)",
+        card: "0 4px 20px rgba(41, 35, 29, 0.06)",
+        elevated: "0 12px 32px rgba(41, 35, 29, 0.08)",
       },
-      backgroundImage: {
-        'gold-gradient': 'linear-gradient(135deg, #D7B77E 0%, #E8D5B0 50%, #C5A56C 100%)',
-        'subtle-ivory': 'linear-gradient(180deg, #FFFFFF 0%, #F7EBDD 100%)',
-      }
     },
   },
   plugins: [],
 };
+
 export default config;

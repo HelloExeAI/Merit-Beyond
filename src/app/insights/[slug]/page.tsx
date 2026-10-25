@@ -5,11 +5,8 @@ import { Metadata } from 'next';
 import { 
   Clock, 
   ArrowLeft, 
-  Tag, 
-  Share2, 
-  BookOpen, 
+  ArrowRight,
   ArrowUpRight, 
-  Sparkles,
   CheckCircle2
 } from 'lucide-react';
 import { insightsData, InsightArticle } from '@/data/insights';
@@ -35,7 +32,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 
   return {
-    title: `${article.title} | Merit & Beyond Insights`,
+    title: `${article.title} | Merit & Beyond`,
     description: article.excerpt,
     openGraph: {
       title: article.title,
@@ -57,62 +54,50 @@ export default function ArticleDetailPage({ params }: Props) {
     notFound();
   }
 
-  // Related articles (articles from same category or different)
   const relatedArticles = insightsData
     .filter((a) => a.id !== article.id)
     .slice(0, 2);
 
   return (
     <article className="flex flex-col w-full">
-      {/* 1. ARTICLE HEADER & BREADCRUMB */}
-      <section className="relative py-14 md:py-20 bg-ivory-gradient border-b border-champagne-300/40">
+      {/* Article Header */}
+      <section className="py-14 md:py-20 bg-[#F3E9D8] border-b border-[#B69A6A]/20">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          {/* Breadcrumb */}
-          <div className="mb-6 flex items-center gap-2 text-xs text-softblack-muted">
-            <Link href="/" className="hover:text-mahogany-600 transition-colors">
-              Home
-            </Link>
-            <span>/</span>
-            <Link href="/insights" className="hover:text-mahogany-600 transition-colors">
-              Insights
-            </Link>
-            <span>/</span>
-            <span className="text-copper-700 font-medium truncate max-w-xs">{article.category}</span>
-          </div>
+          <Link
+            href="/insights"
+            className="inline-flex items-center gap-2 text-xs font-semibold text-[#846A3F] hover:text-[#29231D] mb-6 transition-colors"
+          >
+            <ArrowLeft className="w-3.5 h-3.5" />
+            <span>Back to Insights</span>
+          </Link>
 
           <div className="space-y-4">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-champagne-100 border border-champagne-300 text-copper-700 text-xs font-semibold tracking-widest uppercase">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-white border border-[#B69A6A]/30 text-[10px] font-bold uppercase tracking-wider text-[#846A3F]">
               <span>{article.category}</span>
             </div>
 
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-serif font-bold text-mahogany-600 tracking-tight leading-tight">
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-serif text-[#29231D] tracking-tight leading-tight">
               {article.title}
             </h1>
 
-            <p className="text-base sm:text-lg text-softblack-muted font-sans leading-relaxed pt-2">
+            <p className="text-base sm:text-lg text-[#29231D]/80 font-sans leading-relaxed pt-1">
               {article.excerpt}
             </p>
 
-            {/* Author, Date & Reading Time Bar */}
-            <div className="pt-4 flex flex-wrap items-center justify-between gap-4 border-t border-champagne-300/40 text-xs text-softblack-muted">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-champagne-200 text-mahogany-600 flex items-center justify-center font-serif font-bold text-sm">
-                  MB
-                </div>
-                <div>
-                  <p className="font-semibold text-mahogany-600 text-sm">
-                    {article.author.name}
-                  </p>
-                  <p className="text-[11px] text-copper-600">
-                    {article.author.role}
-                  </p>
-                </div>
+            <div className="pt-4 flex flex-wrap items-center justify-between gap-4 border-t border-[#B69A6A]/30 text-xs text-[#78716C]">
+              <div>
+                <p className="font-semibold text-[#29231D]">
+                  {article.author.name}
+                </p>
+                <p className="text-[11px] text-[#846A3F]">
+                  {article.author.role}
+                </p>
               </div>
 
               <div className="flex items-center gap-4">
                 <span>{article.publishedAt}</span>
                 <span>•</span>
-                <span className="flex items-center gap-1 text-copper-700">
+                <span className="flex items-center gap-1 text-[#846A3F]">
                   <Clock className="w-3.5 h-3.5" />
                   {article.readTime}
                 </span>
@@ -122,38 +107,37 @@ export default function ArticleDetailPage({ params }: Props) {
         </div>
       </section>
 
-      {/* 2. ARTICLE BODY CONTENT */}
-      <section className="py-16 md:py-24 bg-white border-b border-champagne-300/40">
+      {/* Article Body */}
+      <section className="py-16 md:py-24 bg-white border-b border-[#B69A6A]/20">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="prose prose-lg max-w-none text-softblack font-sans leading-relaxed space-y-8">
-            {/* Introduction paragraph */}
-            <p className="text-lg sm:text-xl font-serif text-mahogany-600 leading-relaxed italic border-l-2 border-copper-500 pl-5">
+          <div className="font-sans text-sm sm:text-base text-[#29231D]/85 leading-relaxed space-y-8">
+            <p className="text-lg font-serif text-[#552A19] leading-relaxed italic border-l-2 border-[#B69A6A] pl-5">
               {article.content.introduction}
             </p>
 
-            {/* Structured Sections */}
             {article.content.sections.map((section, idx) => (
               <div key={idx} className="space-y-4 pt-4">
-                <h2 className="text-2xl sm:text-3xl font-serif font-bold text-mahogany-600 tracking-tight">
+                <h2 className="text-2xl font-serif text-[#29231D] font-semibold tracking-tight">
                   {section.heading}
                 </h2>
 
-                {section.body.map((p, pIdx) => (
-                  <p key={pIdx} className="text-base text-softblack-muted leading-relaxed">
-                    {p}
-                  </p>
-                ))}
+                <div className="space-y-3">
+                  {section.body.map((para, pIdx) => (
+                    <p key={pIdx} className="leading-relaxed">
+                      {para}
+                    </p>
+                  ))}
+                </div>
 
-                {/* Key Takeaway Callout */}
                 {section.keyTakeaway && (
-                  <div className="my-6 p-5 rounded-xl bg-ivory-50 border border-champagne-300/80 shadow-subtle flex items-start gap-3">
-                    <Sparkles className="w-5 h-5 text-copper-500 flex-shrink-0 mt-0.5" />
+                  <div className="p-4 rounded-xl bg-[#FAF5ED] border border-[#B69A6A]/30 flex items-start gap-3">
+                    <CheckCircle2 className="w-4 h-4 text-[#846A3F] mt-0.5 flex-shrink-0" />
                     <div>
-                      <span className="text-[11px] uppercase tracking-widest font-semibold text-copper-700 block mb-1">
-                        Executive Takeaway
+                      <span className="font-bold text-xs uppercase tracking-wider text-[#846A3F] block">
+                        Strategic Takeaway
                       </span>
-                      <p className="text-sm font-serif font-semibold text-mahogany-600 italic">
-                        &ldquo;{section.keyTakeaway}&rdquo;
+                      <p className="text-xs sm:text-sm text-[#29231D] mt-0.5 font-medium">
+                        {section.keyTakeaway}
                       </p>
                     </div>
                   </div>
@@ -161,100 +145,75 @@ export default function ArticleDetailPage({ params }: Props) {
               </div>
             ))}
 
-            {/* Conclusion */}
-            <div className="pt-6 border-t border-champagne-200">
-              <h3 className="text-xl font-serif font-bold text-mahogany-600 mb-2">
-                Concluding Advisory Perspective
+            <div className="pt-6 border-t border-[#F3E9D8] space-y-3">
+              <h3 className="text-xl font-serif text-[#29231D] font-semibold">
+                Summary &amp; Executive Follow-Through
               </h3>
-              <p className="text-base text-softblack-muted leading-relaxed">
+              <p className="leading-relaxed">
                 {article.content.conclusion}
               </p>
             </div>
 
-            {/* Tags */}
-            <div className="pt-8 flex flex-wrap items-center gap-2">
-              <span className="text-xs uppercase tracking-wider text-softblack-muted mr-1 font-semibold">
-                Tags:
-              </span>
-              {article.tags.map((tag, idx) => (
-                <span
-                  key={idx}
-                  className="inline-flex items-center gap-1 text-xs bg-ivory-100 text-copper-700 px-3 py-1 rounded-md border border-champagne-200"
-                >
-                  <Tag className="w-3 h-3 text-copper-500" />
-                  {tag}
+            {/* Relevant Action Callout */}
+            {article.relevantCta && (
+              <div className="mt-8 p-6 rounded-xl bg-[#FAF5ED] border border-[#B69A6A]/30 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <span className="text-xs sm:text-sm font-serif font-semibold text-[#29231D]">
+                  {article.relevantCta.text}
                 </span>
-              ))}
-            </div>
+                <Link
+                  href={article.relevantCta.href}
+                  className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-lg bg-[#29231D] hover:bg-[#1E1914] text-white text-xs font-semibold tracking-wider uppercase transition-colors flex-shrink-0"
+                >
+                  <span>Explore Support</span>
+                  <ArrowRight className="w-3.5 h-3.5 text-[#B69A6A]" />
+                </Link>
+              </div>
+            )}
           </div>
         </div>
       </section>
 
-      {/* 3. RELATED ADVISORY ARTICLES */}
-      {relatedArticles.length > 0 && (
-        <section className="py-16 bg-[#FAF5EE] border-b border-champagne-300/40">
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex items-center justify-between mb-8">
-              <h3 className="text-2xl font-serif font-bold text-mahogany-600">
-                Related Advisory Publications
-              </h3>
-              <Link
-                href="/insights"
-                className="text-xs font-semibold uppercase tracking-wider text-copper-600 hover:text-copper-700"
-              >
-                All Insights →
-              </Link>
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-              {relatedArticles.map((rel) => (
-                <div
-                  key={rel.id}
-                  className="bg-white p-6 rounded-xl border border-champagne-200 shadow-subtle flex flex-col justify-between"
-                >
-                  <div>
-                    <span className="text-[11px] font-semibold text-copper-700 uppercase tracking-wider block mb-1">
-                      {rel.category}
-                    </span>
-                    <h4 className="text-lg font-serif font-bold text-mahogany-600 hover:text-copper-600 transition-colors">
-                      <Link href={`/insights/${rel.slug}`}>
-                        {rel.title}
-                      </Link>
-                    </h4>
-                  </div>
-                  <div className="pt-4 mt-4 border-t border-champagne-100 flex items-center justify-between text-xs text-softblack-muted">
-                    <span>{rel.readTime}</span>
-                    <Link
-                      href={`/insights/${rel.slug}`}
-                      className="font-semibold text-copper-600 hover:text-copper-700"
-                    >
-                      Read →
-                    </Link>
-                  </div>
-                </div>
-              ))}
-            </div>
+      {/* Related Articles */}
+      <section className="py-16 bg-[#FAF5ED]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-3xl mb-8">
+            <span className="text-[11px] font-bold tracking-[0.2em] uppercase text-[#846A3F] block">
+              CONTINUE READING
+            </span>
+            <h3 className="text-2xl font-serif text-[#29231D] mt-1">
+              Related Advisory Articles
+            </h3>
           </div>
-        </section>
-      )}
 
-      {/* 4. CLOSING CONSULTATION BANNER */}
-      <section className="py-16 bg-white">
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-4">
-          <h3 className="text-2xl font-serif font-bold text-mahogany-600">
-            Translating Insights into Operational Reality
-          </h3>
-          <p className="text-sm text-softblack-muted max-w-xl mx-auto leading-relaxed">
-            Discuss how these frameworks apply to your organisation’s structure, compliance posture, or leadership development.
-          </p>
-          <div className="pt-2">
-            <Link
-              href="/contact"
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-copper-500 hover:bg-copper-600 text-white text-xs font-semibold tracking-wider uppercase shadow-sm transition-all"
-            >
-              <span>Initiate Advisory Dialogue</span>
-              <ArrowUpRight className="w-4 h-4" />
-            </Link>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {relatedArticles.map((rel) => (
+              <div
+                key={rel.id}
+                className="p-6 rounded-xl bg-white border border-[#B69A6A]/30 shadow-subtle flex flex-col justify-between"
+              >
+                <div className="space-y-2">
+                  <span className="text-[10px] uppercase font-bold tracking-wider text-[#846A3F]">
+                    {rel.category}
+                  </span>
+                  <h4 className="text-lg font-serif text-[#29231D] font-semibold leading-snug">
+                    {rel.title}
+                  </h4>
+                  <p className="text-xs text-[#29231D]/75 leading-relaxed line-clamp-2">
+                    {rel.excerpt}
+                  </p>
+                </div>
+                <div className="pt-4 mt-4 border-t border-[#F3E9D8] flex items-center justify-between text-xs text-[#78716C]">
+                  <span>{rel.readTime}</span>
+                  <Link
+                    href={`/insights/${rel.slug}`}
+                    className="inline-flex items-center gap-1 font-semibold text-[#29231D] hover:text-[#552A19]"
+                  >
+                    <span>Read</span>
+                    <ArrowUpRight className="w-3.5 h-3.5" />
+                  </Link>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>

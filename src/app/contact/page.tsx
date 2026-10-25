@@ -11,28 +11,37 @@ import {
   Send, 
   CheckCircle2, 
   AlertCircle, 
-  Clock, 
-  Calendar,
   Lock
 } from 'lucide-react';
-import { servicesData } from '@/data/services';
+
+function LinkedinIcon(props: React.SVGProps<SVGSVGElement>) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
+      <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+      <rect x="2" y="9" width="4" height="12" />
+      <circle cx="4" cy="4" r="2" />
+    </svg>
+  );
+}
 
 function ContactFormContent() {
   const searchParams = useSearchParams();
-  const serviceParam = searchParams.get('service');
+  const typeParam = searchParams.get('type');
+  const programmeParam = searchParams.get('programme');
+  const industryParam = searchParams.get('industry');
 
-  // Form State
   const [formData, setFormData] = useState({
     fullName: '',
-    workEmail: '',
+    email: '',
     phone: '',
-    companyName: '',
-    jobTitle: '',
-    areaOfInterest: '',
-    orgSize: '',
+    organisation: '',
+    role: '',
+    enquiryType: 'Business Advisory',
     requirement: '',
+    preferredContactMethod: 'Email',
     consent: false,
-    honeypot: '', // anti-bot spam trap
+    marketingConsent: false,
+    honeypot: '',
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -40,19 +49,32 @@ function ContactFormContent() {
   const [errorMessage, setErrorMessage] = useState('');
   const [referenceId, setReferenceId] = useState('');
 
-  // Prepopulate area of interest from URL param if available
   useEffect(() => {
-    if (serviceParam) {
-      const matched = servicesData.find((s) => s.slug === serviceParam);
-      if (matched) {
-        setFormData((prev) => ({ ...prev, areaOfInterest: matched.title }));
-      } else if (serviceParam === 'comprehensive-review') {
-        setFormData((prev) => ({ ...prev, areaOfInterest: 'Comprehensive Organisational Review' }));
-      } else if (serviceParam === 'general-advisory') {
-        setFormData((prev) => ({ ...prev, areaOfInterest: 'General People Strategy & Advisory' }));
-      }
+    if (typeParam === 'workshop') {
+      setFormData((prev) => ({
+        ...prev,
+        enquiryType: 'Open Workshop / Individual Learning',
+        requirement: programmeParam ? `I am interested in registering for: ${programmeParam}` : prev.requirement,
+      }));
+    } else if (typeParam === 'quickconsult') {
+      setFormData((prev) => ({
+        ...prev,
+        enquiryType: 'QuickConsult (only when live)',
+        requirement: 'I would like to participate in the M&B QuickConsult pilot program.',
+      }));
+    } else if (typeParam === 'corporate') {
+      setFormData((prev) => ({
+        ...prev,
+        enquiryType: 'Corporate Learning',
+      }));
+    } else if (industryParam) {
+      setFormData((prev) => ({
+        ...prev,
+        enquiryType: 'Business Advisory',
+        requirement: `We are exploring advisory support in the ${industryParam} sector.`,
+      }));
     }
-  }, [serviceParam]);
+  }, [typeParam, programmeParam, industryParam]);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
@@ -72,10 +94,10 @@ function ContactFormContent() {
     setSubmitStatus('idle');
     setErrorMessage('');
 
-    // Client-side quick check
-    if (!formData.consent) {
-      setErrorMessage('Please consent to the privacy policy before submitting.');
+    if (formData.honeypot) {
       setIsSubmitting(false);
+      setSubmitStatus('success');
+      setReferenceId('MB-VERIFIED');
       return;
     }
 
@@ -92,467 +114,388 @@ function ContactFormContent() {
 
       if (response.ok && result.success) {
         setSubmitStatus('success');
-        setReferenceId(result.referenceId || 'MB-CONFIRMED');
+        setReferenceId(result.referenceId);
       } else {
         setSubmitStatus('error');
-        setErrorMessage(result.error || 'Failed to submit enquiry. Please try again or email directly.');
+        setErrorMessage(result.error || 'Unable to register your enquiry. Please verify details and retry.');
       }
     } catch {
       setSubmitStatus('error');
-      setErrorMessage('Network connection error. Please verify your internet or contact us directly via phone or email.');
+      setErrorMessage('Network connection error. Please verify your connection or email ish@meritandbeyond.in directly.');
     } finally {
       setIsSubmitting(false);
     }
   };
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
-      {/* Left Column: The Professional Consultation Form */}
-      <div className="lg:col-span-7 bg-white rounded-2xl p-8 sm:p-10 border border-champagne-300 shadow-elevated">
-        {submitStatus === 'success' ? (
-          <div className="text-center py-8 space-y-5 animate-fade-in">
-            <div className="w-16 h-16 bg-emerald-50 text-emerald-600 rounded-full flex items-center justify-center mx-auto border border-emerald-200">
-              <CheckCircle2 className="w-8 h-8" />
-            </div>
-
-            <span className="text-xs uppercase tracking-widest text-copper-600 font-semibold block">
-              Consultation Registered
+    <div className="flex flex-col w-full">
+      {/* Hero Header */}
+      <section className="py-16 md:py-24 bg-[#F3E9D8] border-b border-[#B69A6A]/20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-3xl space-y-4">
+            <span className="text-[11px] font-bold tracking-[0.2em] uppercase text-[#846A3F] block">
+              INITIAL ENGAGEMENT
             </span>
-
-            <h3 className="text-2xl sm:text-3xl font-serif font-bold text-mahogany-600">
-              Thank You for Reaching Out
-            </h3>
-
-            <div className="p-4 rounded-xl bg-ivory-50 border border-champagne-200 max-w-md mx-auto text-left space-y-2">
-              <div className="text-xs text-softblack-muted">
-                Advisory Reference: <strong className="font-mono text-mahogany-600">{referenceId}</strong>
-              </div>
-              <div className="text-xs text-softblack-muted">
-                Client Contact: <span className="text-softblack">{formData.workEmail}</span>
-              </div>
-            </div>
-
-            <p className="text-sm text-softblack-muted leading-relaxed max-w-md mx-auto">
-              Our advisory partners have received your details. A senior consultant will review your business requirements and initiate contact within 24 to 48 business hours.
-            </p>
-
-            <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-3">
-              <button
-                type="button"
-                onClick={() => {
-                  setSubmitStatus('idle');
-                  setFormData({
-                    fullName: '',
-                    workEmail: '',
-                    phone: '',
-                    companyName: '',
-                    jobTitle: '',
-                    areaOfInterest: '',
-                    orgSize: '',
-                    requirement: '',
-                    consent: false,
-                    honeypot: '',
-                  });
-                }}
-                className="px-6 py-2.5 rounded-lg border border-champagne-300 text-xs font-semibold uppercase text-mahogany-600 hover:bg-ivory-50"
-              >
-                Submit Another Inquiry
-              </button>
-              <Link
-                href="/"
-                className="px-6 py-2.5 rounded-lg bg-copper-500 text-white text-xs font-semibold uppercase hover:bg-copper-600"
-              >
-                Return to Home
-              </Link>
-            </div>
-          </div>
-        ) : (
-          <form onSubmit={handleSubmit} className="space-y-6">
-            <div className="border-b border-champagne-200 pb-4">
-              <h2 className="text-2xl font-serif font-bold text-mahogany-600">
-                Request a Strategic Consultation
-              </h2>
-              <p className="text-xs sm:text-sm text-softblack-muted mt-1">
-                Please complete the details below. All discussions are conducted with strict professional discretion.
-              </p>
-            </div>
-
-            {/* Error Message Box */}
-            {submitStatus === 'error' && (
-              <div className="p-4 rounded-xl bg-red-50 border border-red-200 text-red-700 text-xs flex items-center gap-2">
-                <AlertCircle className="w-4 h-4 flex-shrink-0" />
-                <span>{errorMessage}</span>
-              </div>
-            )}
-
-            {/* Anti-bot Honeypot field (hidden from real users) */}
-            <div className="hidden" aria-hidden="true">
-              <label htmlFor="honeypot">Leave blank</label>
-              <input
-                id="honeypot"
-                type="text"
-                name="honeypot"
-                tabIndex={-1}
-                value={formData.honeypot}
-                onChange={handleChange}
-                autoComplete="off"
-              />
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-              {/* Full Name */}
-              <div>
-                <label className="block text-xs font-semibold uppercase tracking-wider text-mahogany-500 mb-1.5">
-                  Full Name <span className="text-copper-600">*</span>
-                </label>
-                <input
-                  type="text"
-                  name="fullName"
-                  required
-                  value={formData.fullName}
-                  onChange={handleChange}
-                  placeholder="e.g. Anand Sharma"
-                  className="w-full px-4 py-2.5 rounded-lg bg-ivory-50 border border-champagne-300 text-base sm:text-sm text-softblack focus:bg-white focus:outline-none focus:ring-2 focus:ring-copper-500"
-                />
-              </div>
-
-              {/* Work Email */}
-              <div>
-                <label className="block text-xs font-semibold uppercase tracking-wider text-mahogany-500 mb-1.5">
-                  Work Email <span className="text-copper-600">*</span>
-                </label>
-                <input
-                  type="email"
-                  name="workEmail"
-                  required
-                  value={formData.workEmail}
-                  onChange={handleChange}
-                  placeholder="anand@company.com"
-                  className="w-full px-4 py-2.5 rounded-lg bg-ivory-50 border border-champagne-300 text-base sm:text-sm text-softblack focus:bg-white focus:outline-none focus:ring-2 focus:ring-copper-500"
-                />
-              </div>
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-              {/* Phone Number */}
-              <div>
-                <label className="block text-xs font-semibold uppercase tracking-wider text-mahogany-500 mb-1.5">
-                  Phone Number <span className="text-copper-600">*</span>
-                </label>
-                <input
-                  type="tel"
-                  name="phone"
-                  required
-                  value={formData.phone}
-                  onChange={handleChange}
-                  placeholder="+91 98765 43210"
-                  className="w-full px-4 py-2.5 rounded-lg bg-ivory-50 border border-champagne-300 text-base sm:text-sm text-softblack focus:bg-white focus:outline-none focus:ring-2 focus:ring-copper-500"
-                />
-              </div>
-
-              {/* Company Name */}
-              <div>
-                <label className="block text-xs font-semibold uppercase tracking-wider text-mahogany-500 mb-1.5">
-                  Company / Entity Name <span className="text-copper-600">*</span>
-                </label>
-                <input
-                  type="text"
-                  name="companyName"
-                  required
-                  value={formData.companyName}
-                  onChange={handleChange}
-                  placeholder="e.g. Apex Enterprises Ltd."
-                  className="w-full px-4 py-2.5 rounded-lg bg-ivory-50 border border-champagne-300 text-base sm:text-sm text-softblack focus:bg-white focus:outline-none focus:ring-2 focus:ring-copper-500"
-                />
-              </div>
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-              {/* Job Title (Optional) */}
-              <div>
-                <label className="block text-xs font-semibold uppercase tracking-wider text-mahogany-500 mb-1.5">
-                  Your Designation / Role <span className="text-softblack-muted font-normal text-[11px]">(Optional)</span>
-                </label>
-                <input
-                  type="text"
-                  name="jobTitle"
-                  value={formData.jobTitle}
-                  onChange={handleChange}
-                  placeholder="e.g. Managing Director / VP HR"
-                  className="w-full px-4 py-2.5 rounded-lg bg-ivory-50 border border-champagne-300 text-base sm:text-sm text-softblack focus:bg-white focus:outline-none focus:ring-2 focus:ring-copper-500"
-                />
-              </div>
-
-              {/* Organisation Size (Optional) */}
-              <div>
-                <label className="block text-xs font-semibold uppercase tracking-wider text-mahogany-500 mb-1.5">
-                  Organisation Size <span className="text-softblack-muted font-normal text-[11px]">(Optional)</span>
-                </label>
-                <select
-                  name="orgSize"
-                  value={formData.orgSize}
-                  onChange={handleChange}
-                  className="w-full px-4 py-2.5 rounded-lg bg-ivory-50 border border-champagne-300 text-base sm:text-sm text-softblack focus:bg-white focus:outline-none focus:ring-2 focus:ring-copper-500"
-                >
-                  <option value="">Select Headcount Range</option>
-                  <option value="1-50 employees">1 - 50 employees (Early Growth)</option>
-                  <option value="51-200 employees">51 - 200 employees (Scaling Phase)</option>
-                  <option value="201-500 employees">201 - 500 employees (Mid-Market)</option>
-                  <option value="500+ employees">500+ employees (Enterprise)</option>
-                </select>
-              </div>
-            </div>
-
-            {/* Area of Interest */}
-            <div>
-              <label className="block text-xs font-semibold uppercase tracking-wider text-mahogany-500 mb-1.5">
-                Primary Area of Interest <span className="text-copper-600">*</span>
-              </label>
-              <select
-                name="areaOfInterest"
-                required
-                value={formData.areaOfInterest}
-                onChange={handleChange}
-                className="w-full px-4 py-2.5 rounded-lg bg-ivory-50 border border-champagne-300 text-base sm:text-sm text-softblack focus:bg-white focus:outline-none focus:ring-2 focus:ring-copper-500"
-              >
-                <option value="">Select a Consulting Discipline</option>
-                {servicesData.map((svc) => (
-                  <option key={svc.id} value={svc.title}>
-                    {svc.categoryNumber}. {svc.title}
-                  </option>
-                ))}
-                <option value="Comprehensive Organisational Review">
-                  Comprehensive Organisational Diagnostic Review
-                </option>
-                <option value="General People Strategy & Advisory">
-                  General People Advisory &amp; Leadership Consultation
-                </option>
-              </select>
-            </div>
-
-            {/* Brief Description of Requirement */}
-            <div>
-              <label className="block text-xs font-semibold uppercase tracking-wider text-mahogany-500 mb-1.5">
-                Brief Description of the Requirement <span className="text-copper-600">*</span>
-              </label>
-              <textarea
-                name="requirement"
-                required
-                rows={4}
-                value={formData.requirement}
-                onChange={handleChange}
-                placeholder="Please outline the specific challenges, upcoming milestones, or people objectives your organisation seeks to address..."
-                className="w-full px-4 py-3 rounded-lg bg-ivory-50 border border-champagne-300 text-base sm:text-sm text-softblack focus:bg-white focus:outline-none focus:ring-2 focus:ring-copper-500 leading-relaxed"
-              />
-            </div>
-
-            {/* Consent Checkbox */}
-            <div className="flex items-start gap-3 pt-2">
-              <input
-                id="consent-checkbox"
-                type="checkbox"
-                name="consent"
-                required
-                checked={formData.consent}
-                onChange={handleChange}
-                className="mt-1 h-4 w-4 rounded border-champagne-400 text-copper-600 focus:ring-copper-500"
-              />
-              <label htmlFor="consent-checkbox" className="text-xs text-softblack-muted leading-normal">
-                I agree to the processing of this information for advisory consultation purposes in accordance with the{' '}
-                <Link
-                  href="/privacy-policy"
-                  target="_blank"
-                  className="text-copper-600 hover:text-copper-700 underline underline-offset-2"
-                >
-                  Merit &amp; Beyond Privacy Policy
-                </Link>
-                . We do not sell or share client data.
-              </label>
-            </div>
-
-            {/* Submit Button */}
-            <div className="pt-2">
-              <button
-                type="submit"
-                disabled={isSubmitting}
-                className="w-full inline-flex items-center justify-center gap-2.5 px-8 py-4 rounded-lg bg-copper-500 hover:bg-copper-600 disabled:opacity-70 text-white font-medium text-sm tracking-wider uppercase shadow-md transition-all group"
-              >
-                {isSubmitting ? (
-                  <>
-                    <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></span>
-                    <span>Transmitting Consultation Details...</span>
-                  </>
-                ) : (
-                  <>
-                    <span>Submit Consultation Request</span>
-                    <Send className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-                  </>
-                )}
-              </button>
-            </div>
-          </form>
-        )}
-      </div>
-
-      {/* Right Column: Direct Business Contact Information & Timeline */}
-      <div className="lg:col-span-5 space-y-6">
-        {/* Contact Info Card */}
-        <div className="p-8 rounded-2xl bg-white border border-champagne-300 shadow-subtle space-y-6">
-          <div>
-            <span className="text-xs uppercase tracking-widest text-copper-600 font-semibold block mb-1">
-              Direct Contact
-            </span>
-            <h3 className="text-2xl font-serif font-bold text-mahogany-600">
-              Corporate Office &amp; Advisory
-            </h3>
-            <p className="text-xs text-softblack-muted mt-1">
-              Official contact details from the Merit &amp; Beyond brochure.
+            <h1 className="text-4xl sm:text-5xl font-serif text-[#29231D] tracking-tight leading-tight">
+              Let’s start with the requirement.
+            </h1>
+            <p className="text-base sm:text-lg text-[#29231D]/80 leading-relaxed font-sans pt-2">
+              Tell us what you are trying to solve, improve or build. We will review your enquiry and respond through the contact details you provide.
             </p>
           </div>
+        </div>
+      </section>
 
-          <div className="space-y-4 pt-2">
-            <a
-              href="tel:+916366056770"
-              className="flex items-start gap-3.5 p-3.5 rounded-xl bg-ivory-50 hover:bg-champagne-100/60 border border-champagne-200 transition-colors group"
-            >
-              <div className="w-10 h-10 rounded-lg bg-white flex items-center justify-center text-copper-600 border border-champagne-200 flex-shrink-0 group-hover:bg-copper-500 group-hover:text-white transition-colors">
-                <Phone className="w-5 h-5" />
-              </div>
-              <div>
-                <span className="text-[11px] uppercase tracking-wider text-softblack-muted font-semibold block">
-                  Telephone
-                </span>
-                <span className="text-sm font-semibold text-mahogany-600 group-hover:text-copper-700">
-                  +91 6366056770
-                </span>
-              </div>
-            </a>
+      {/* Main Grid: Form + Verified Details */}
+      <section className="py-16 md:py-24 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+            {/* Left Form Column */}
+            <div className="lg:col-span-7">
+              {submitStatus === 'success' ? (
+                <div className="p-8 sm:p-10 rounded-2xl bg-[#FAF5ED] border border-[#B69A6A]/40 space-y-6">
+                  <div className="w-12 h-12 rounded-full bg-[#E8EEE9] text-[#26374B] flex items-center justify-center">
+                    <CheckCircle2 className="w-7 h-7" />
+                  </div>
 
-            <a
-              href="mailto:ish@meritandbeyond.in"
-              className="flex items-start gap-3.5 p-3.5 rounded-xl bg-ivory-50 hover:bg-champagne-100/60 border border-champagne-200 transition-colors group"
-            >
-              <div className="w-10 h-10 rounded-lg bg-white flex items-center justify-center text-copper-600 border border-champagne-200 flex-shrink-0 group-hover:bg-copper-500 group-hover:text-white transition-colors">
-                <Mail className="w-5 h-5" />
-              </div>
-              <div>
-                <span className="text-[11px] uppercase tracking-wider text-softblack-muted font-semibold block">
-                  Advisory Inquiries
-                </span>
-                <span className="text-sm font-semibold text-mahogany-600 group-hover:text-copper-700 truncate block">
-                  ish@meritandbeyond.in
-                </span>
-              </div>
-            </a>
+                  <div className="space-y-2">
+                    <h2 className="text-2xl font-serif text-[#29231D]">
+                      Enquiry Registered Successfully
+                    </h2>
+                    <p className="text-xs sm:text-sm text-[#29231D]/80 font-sans leading-relaxed">
+                      Thank you. Your requirement has been forwarded to our advisory team. We will review your context and reach out via your preferred contact channel.
+                    </p>
+                  </div>
 
-            <div className="flex items-start gap-3.5 p-3.5 rounded-xl bg-ivory-50 border border-champagne-200">
-              <div className="w-10 h-10 rounded-lg bg-white flex items-center justify-center text-copper-600 border border-champagne-200 flex-shrink-0">
-                <Globe className="w-5 h-5" />
-              </div>
-              <div>
-                <span className="text-[11px] uppercase tracking-wider text-softblack-muted font-semibold block">
-                  Official Web
-                </span>
-                <span className="text-sm font-semibold text-mahogany-600">
-                  https://www.meritandbeyond.in
-                </span>
+                  <div className="p-4 rounded-xl bg-white border border-[#B69A6A]/30">
+                    <span className="text-[10px] font-bold uppercase tracking-wider text-[#846A3F] block mb-1">
+                      Tracking Reference ID
+                    </span>
+                    <span className="text-sm font-mono font-bold text-[#29231D]">{referenceId}</span>
+                  </div>
+
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setSubmitStatus('idle');
+                      setFormData({
+                        fullName: '',
+                        email: '',
+                        phone: '',
+                        organisation: '',
+                        role: '',
+                        enquiryType: 'Business Advisory',
+                        requirement: '',
+                        preferredContactMethod: 'Email',
+                        consent: false,
+                        marketingConsent: false,
+                        honeypot: '',
+                      });
+                    }}
+                    className="inline-flex items-center text-xs font-semibold text-[#846A3F] hover:text-[#29231D]"
+                  >
+                    ← Submit another enquiry
+                  </button>
+                </div>
+              ) : (
+                <form onSubmit={handleSubmit} className="space-y-6">
+                  {submitStatus === 'error' && (
+                    <div className="p-4 rounded-xl bg-red-50 border border-red-200 text-red-700 text-xs flex items-start gap-2.5">
+                      <AlertCircle className="w-4 h-4 flex-shrink-0 mt-0.5" />
+                      <span>{errorMessage}</span>
+                    </div>
+                  )}
+
+                  {/* Honeypot Spam Trap */}
+                  <input
+                    type="text"
+                    name="honeypot"
+                    value={formData.honeypot}
+                    onChange={handleChange}
+                    className="hidden"
+                    tabIndex={-1}
+                    autoComplete="off"
+                  />
+
+                  {/* Enquiry Type Dropdown */}
+                  <div>
+                    <label htmlFor="enquiryType" className="block text-xs font-semibold uppercase tracking-wider text-[#29231D] mb-1.5">
+                      Enquiry Type <span className="text-[#846A3F]">*</span>
+                    </label>
+                    <select
+                      id="enquiryType"
+                      name="enquiryType"
+                      required
+                      value={formData.enquiryType}
+                      onChange={handleChange}
+                      className="w-full px-4 py-3 rounded-lg bg-[#FAF5ED] border border-[#B69A6A]/30 text-xs sm:text-sm text-[#29231D] focus:outline-none focus:ring-1 focus:ring-[#B69A6A]"
+                    >
+                      <option value="Business Advisory">Business Advisory (Strategic, Fractional CHRO, Transformation)</option>
+                      <option value="Corporate Learning">Corporate Learning (Tailored Leadership &amp; Team Cohorts)</option>
+                      <option value="Open Workshop / Individual Learning">Open Workshop / Individual Learning</option>
+                      <option value="QuickConsult (only when live)">QuickConsult (Pilot Interest)</option>
+                      <option value="Partnership / Social Impact">Partnership / Social Impact</option>
+                      <option value="Other">Other Requirement</option>
+                    </select>
+                  </div>
+
+                  {/* Full Name & Email */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                      <label htmlFor="fullName" className="block text-xs font-semibold uppercase tracking-wider text-[#29231D] mb-1.5">
+                        Full Name <span className="text-[#846A3F]">*</span>
+                      </label>
+                      <input
+                        type="text"
+                        id="fullName"
+                        name="fullName"
+                        required
+                        value={formData.fullName}
+                        onChange={handleChange}
+                        placeholder="e.g. Priyadarshini Mehta"
+                        className="w-full px-4 py-3 rounded-lg bg-[#FAF5ED] border border-[#B69A6A]/30 text-xs sm:text-sm text-[#29231D] focus:outline-none focus:ring-1 focus:ring-[#B69A6A]"
+                      />
+                    </div>
+
+                    <div>
+                      <label htmlFor="email" className="block text-xs font-semibold uppercase tracking-wider text-[#29231D] mb-1.5">
+                        Email Address <span className="text-[#846A3F]">*</span>
+                      </label>
+                      <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        required
+                        value={formData.email}
+                        onChange={handleChange}
+                        placeholder="e.g. name@organisation.com"
+                        className="w-full px-4 py-3 rounded-lg bg-[#FAF5ED] border border-[#B69A6A]/30 text-xs sm:text-sm text-[#29231D] focus:outline-none focus:ring-1 focus:ring-[#B69A6A]"
+                      />
+                    </div>
+                  </div>
+
+                  {/* Phone & Organisation */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                      <label htmlFor="phone" className="block text-xs font-semibold uppercase tracking-wider text-[#29231D] mb-1.5">
+                        Phone Number <span className="text-gray-400 font-normal text-[10px]">(Optional)</span>
+                      </label>
+                      <input
+                        type="tel"
+                        id="phone"
+                        name="phone"
+                        value={formData.phone}
+                        onChange={handleChange}
+                        placeholder="e.g. +91 98765 43210"
+                        className="w-full px-4 py-3 rounded-lg bg-[#FAF5ED] border border-[#B69A6A]/30 text-xs sm:text-sm text-[#29231D] focus:outline-none focus:ring-1 focus:ring-[#B69A6A]"
+                      />
+                    </div>
+
+                    <div>
+                      <label htmlFor="organisation" className="block text-xs font-semibold uppercase tracking-wider text-[#29231D] mb-1.5">
+                        Organisation <span className="text-gray-400 font-normal text-[10px]">(Optional for individuals)</span>
+                      </label>
+                      <input
+                        type="text"
+                        id="organisation"
+                        name="organisation"
+                        value={formData.organisation}
+                        onChange={handleChange}
+                        placeholder="e.g. Acme Enterprises"
+                        className="w-full px-4 py-3 rounded-lg bg-[#FAF5ED] border border-[#B69A6A]/30 text-xs sm:text-sm text-[#29231D] focus:outline-none focus:ring-1 focus:ring-[#B69A6A]"
+                      />
+                    </div>
+                  </div>
+
+                  {/* Role & Preferred Contact Method */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                      <label htmlFor="role" className="block text-xs font-semibold uppercase tracking-wider text-[#29231D] mb-1.5">
+                        Role / Designation <span className="text-gray-400 font-normal text-[10px]">(Optional)</span>
+                      </label>
+                      <input
+                        type="text"
+                        id="role"
+                        name="role"
+                        value={formData.role}
+                        onChange={handleChange}
+                        placeholder="e.g. Managing Director / HR Head"
+                        className="w-full px-4 py-3 rounded-lg bg-[#FAF5ED] border border-[#B69A6A]/30 text-xs sm:text-sm text-[#29231D] focus:outline-none focus:ring-1 focus:ring-[#B69A6A]"
+                      />
+                    </div>
+
+                    <div>
+                      <label htmlFor="preferredContactMethod" className="block text-xs font-semibold uppercase tracking-wider text-[#29231D] mb-1.5">
+                        Preferred Contact Method
+                      </label>
+                      <select
+                        id="preferredContactMethod"
+                        name="preferredContactMethod"
+                        value={formData.preferredContactMethod}
+                        onChange={handleChange}
+                        className="w-full px-4 py-3 rounded-lg bg-[#FAF5ED] border border-[#B69A6A]/30 text-xs sm:text-sm text-[#29231D] focus:outline-none focus:ring-1 focus:ring-[#B69A6A]"
+                      >
+                        <option value="Email">Email</option>
+                        <option value="Phone">Phone</option>
+                        <option value="Either">Either Email or Phone</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  {/* What would you like help with? */}
+                  <div>
+                    <label htmlFor="requirement" className="block text-xs font-semibold uppercase tracking-wider text-[#29231D] mb-1.5">
+                      What would you like help with? <span className="text-[#846A3F]">*</span>
+                    </label>
+                    <textarea
+                      id="requirement"
+                      name="requirement"
+                      required
+                      rows={5}
+                      value={formData.requirement}
+                      onChange={handleChange}
+                      placeholder="Please describe what your organisation is working through, key objectives, or specific questions..."
+                      className="w-full px-4 py-3 rounded-lg bg-[#FAF5ED] border border-[#B69A6A]/30 text-xs sm:text-sm text-[#29231D] focus:outline-none focus:ring-1 focus:ring-[#B69A6A] resize-y"
+                    />
+                  </div>
+
+                  {/* Open Form Data Protection Guardrail Notice */}
+                  <div className="p-3.5 rounded-lg bg-[#FAF5ED] border border-[#B69A6A]/30 text-[11px] text-[#78716C] leading-relaxed">
+                    <strong>Data Protection Note:</strong> Please do not submit employee records, salary files, sensitive personal data, or confidential contracts through this initial open form. A secure controlled document exchange is established upon mutual engagement.
+                  </div>
+
+                  {/* Privacy Notice Consent */}
+                  <div className="space-y-3 pt-2">
+                    <label className="flex items-start gap-3 cursor-pointer">
+                      <input
+                        type="checkbox"
+                        name="consent"
+                        required
+                        checked={formData.consent}
+                        onChange={handleChange}
+                        className="mt-1 w-4 h-4 rounded text-[#29231D] border-[#B69A6A] focus:ring-[#B69A6A]"
+                      />
+                      <span className="text-xs text-[#29231D]/80">
+                        I acknowledge the{' '}
+                        <Link href="/privacy-policy" className="text-[#846A3F] underline">
+                          Privacy Policy
+                        </Link>{' '}
+                        and consent to Merit &amp; Beyond reviewing my enquiry and responding via the provided contact details. <span className="text-[#846A3F]">*</span>
+                      </span>
+                    </label>
+
+                    <label className="flex items-start gap-3 cursor-pointer">
+                      <input
+                        type="checkbox"
+                        name="marketingConsent"
+                        checked={formData.marketingConsent}
+                        onChange={handleChange}
+                        className="mt-1 w-4 h-4 rounded text-[#29231D] border-[#B69A6A] focus:ring-[#B69A6A]"
+                      />
+                      <span className="text-xs text-[#78716C]">
+                        (Optional) I would like to receive occasional executive research and invitations to upcoming practitioner workshops.
+                      </span>
+                    </label>
+                  </div>
+
+                  {/* Submit Button */}
+                  <div className="pt-2">
+                    <button
+                      type="submit"
+                      disabled={isSubmitting}
+                      className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-4 rounded-lg bg-[#29231D] hover:bg-[#1E1914] text-white text-xs font-semibold tracking-wider uppercase transition-all shadow-md disabled:opacity-50"
+                    >
+                      <span>{isSubmitting ? 'Registering...' : 'Discuss a Requirement'}</span>
+                      <Send className="w-3.5 h-3.5 text-[#B69A6A]" />
+                    </button>
+                  </div>
+                </form>
+              )}
+            </div>
+
+            {/* Right Verified Details Column */}
+            <div className="lg:col-span-5 space-y-6">
+              <div className="p-8 rounded-2xl bg-[#FAF5ED] border border-[#B69A6A]/30 space-y-6">
+                <div>
+                  <span className="text-[10px] font-bold tracking-widest uppercase text-[#846A3F] block mb-1">
+                    Direct Contact
+                  </span>
+                  <h3 className="text-xl font-serif text-[#29231D]">
+                    Verified Firm Details
+                  </h3>
+                </div>
+
+                <div className="space-y-4 text-xs sm:text-sm text-[#29231D]">
+                  <a
+                    href="mailto:ish@meritandbeyond.in"
+                    className="flex items-center gap-3 text-[#29231D] hover:text-[#846A3F] transition-colors"
+                  >
+                    <div className="w-9 h-9 rounded-full bg-white border border-[#B69A6A]/30 flex items-center justify-center flex-shrink-0">
+                      <Mail className="w-4 h-4 text-[#846A3F]" />
+                    </div>
+                    <div>
+                      <span className="text-[10px] text-[#78716C] block uppercase tracking-wider">Email</span>
+                      <span className="font-semibold font-mono">ish@meritandbeyond.in</span>
+                    </div>
+                  </a>
+
+                  <a
+                    href="tel:+916366056770"
+                    className="flex items-center gap-3 text-[#29231D] hover:text-[#846A3F] transition-colors"
+                  >
+                    <div className="w-9 h-9 rounded-full bg-white border border-[#B69A6A]/30 flex items-center justify-center flex-shrink-0">
+                      <Phone className="w-4 h-4 text-[#846A3F]" />
+                    </div>
+                    <div>
+                      <span className="text-[10px] text-[#78716C] block uppercase tracking-wider">Phone</span>
+                      <span className="font-semibold">+91 63660 56770</span>
+                    </div>
+                  </a>
+
+                  <div className="flex items-center gap-3">
+                    <div className="w-9 h-9 rounded-full bg-white border border-[#B69A6A]/30 flex items-center justify-center flex-shrink-0">
+                      <Globe className="w-4 h-4 text-[#846A3F]" />
+                    </div>
+                    <div>
+                      <span className="text-[10px] text-[#78716C] block uppercase tracking-wider">Website</span>
+                      <span className="font-semibold">www.meritandbeyond.in</span>
+                    </div>
+                  </div>
+
+                  <a
+                    href="https://www.linkedin.com/company/meritandbeyond/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-3 text-[#29231D] hover:text-[#846A3F] transition-colors"
+                  >
+                    <div className="w-9 h-9 rounded-full bg-white border border-[#B69A6A]/30 flex items-center justify-center flex-shrink-0">
+                      <LinkedinIcon className="w-4 h-4 text-[#846A3F]" />
+                    </div>
+                    <div>
+                      <span className="text-[10px] text-[#78716C] block uppercase tracking-wider">LinkedIn</span>
+                      <span className="font-semibold">linkedin.com/company/meritandbeyond</span>
+                    </div>
+                  </a>
+                </div>
+
+                <div className="pt-4 border-t border-[#F3E9D8] text-xs text-[#78716C] leading-relaxed">
+                  <p>
+                    All prospective client discussions are held under strict mutual professional confidentiality.
+                  </p>
+                </div>
               </div>
             </div>
           </div>
         </div>
-
-        {/* Process Timeline Card: What Happens After You Reach Out */}
-        <div className="p-8 rounded-2xl bg-[#FAF5EE] border border-champagne-300 space-y-5">
-          <div className="flex items-center gap-2 text-xs uppercase tracking-widest text-copper-600 font-semibold">
-            <Clock className="w-4 h-4" />
-            <span>Consultation Lifecycle</span>
-          </div>
-
-          <h4 className="text-lg font-serif font-bold text-mahogany-600">
-            What Happens Next
-          </h4>
-
-          <div className="space-y-4 text-xs font-sans">
-            <div className="flex items-start gap-3">
-              <span className="w-6 h-6 rounded-full bg-copper-500 text-white flex items-center justify-center font-bold flex-shrink-0 mt-0.5">
-                1
-              </span>
-              <div>
-                <span className="font-semibold text-mahogany-600 block">Initial Diagnostic Review</span>
-                <p className="text-softblack-muted mt-0.5">
-                  Our practice partners examine your requirements and current organizational context within 24–48 hours.
-                </p>
-              </div>
-            </div>
-
-            <div className="flex items-start gap-3">
-              <span className="w-6 h-6 rounded-full bg-champagne-400 text-mahogany-600 flex items-center justify-center font-bold flex-shrink-0 mt-0.5">
-                2
-              </span>
-              <div>
-                <span className="font-semibold text-mahogany-600 block">Preliminary Advisory Call</span>
-                <p className="text-softblack-muted mt-0.5">
-                  A 30-minute structured discovery conversation under mutual confidentiality to clarify operational scope.
-                </p>
-              </div>
-            </div>
-
-            <div className="flex items-start gap-3">
-              <span className="w-6 h-6 rounded-full bg-champagne-300 text-mahogany-600 flex items-center justify-center font-bold flex-shrink-0 mt-0.5">
-                3
-              </span>
-              <div>
-                <span className="font-semibold text-mahogany-600 block">Tailored Engagement Blueprint</span>
-                <p className="text-softblack-muted mt-0.5">
-                  Delivery of a clear proposal detailing milestones, five-stage methodology, deliverables, and commercial terms.
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <div className="pt-3 border-t border-champagne-200/80 flex items-center gap-2 text-[11px] text-softblack-muted">
-            <Lock className="w-3.5 h-3.5 text-copper-600 flex-shrink-0" />
-            <span>Strict confidentiality and mutual non-disclosure assured.</span>
-          </div>
-        </div>
-      </div>
+      </section>
     </div>
   );
 }
 
 export default function ContactPage() {
   return (
-    <div className="flex flex-col w-full">
-      {/* HERO SECTION */}
-      <section className="relative py-16 md:py-20 bg-ivory-gradient border-b border-champagne-300/40">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-3xl space-y-4">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-champagne-100 border border-champagne-300 text-copper-700 text-xs font-semibold tracking-widest uppercase shadow-sm">
-              <ShieldCheck className="w-3.5 h-3.5 text-copper-500" />
-              <span>Advisory Engagement</span>
-            </div>
-            <h1 className="text-4xl sm:text-5xl font-serif font-bold text-mahogany-600 tracking-tight leading-tight">
-              Start a Strategic Conversation
-            </h1>
-            <p className="text-lg text-softblack-muted font-sans font-normal leading-relaxed">
-              Partner with Merit &amp; Beyond to strengthen your people foundations, maintain continuous statutory compliance, and build lasting organizational capability.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* FORM AND CONTACT DETAILS SECTION */}
-      <section className="py-16 md:py-24 bg-[#F7EBDD]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <Suspense fallback={
-            <div className="p-12 text-center text-sm text-softblack-muted bg-white rounded-2xl border border-champagne-200">
-              Loading consultation form...
-            </div>
-          }>
-            <ContactFormContent />
-          </Suspense>
-        </div>
-      </section>
-    </div>
+    <Suspense fallback={<div className="p-16 text-center text-sm">Loading contact interface...</div>}>
+      <ContactFormContent />
+    </Suspense>
   );
 }

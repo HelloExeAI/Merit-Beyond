@@ -17,11 +17,29 @@ export default function Logo({
 }: LogoProps) {
   const isDark = variant === 'dark';
 
-  // Sizing definitions
+  // Dimension mapping based on 753x469 monogram and 1325x227 wordmark
   const dimensions = {
-    sm: { iconSize: 34, wordmarkHeight: 24, wordmarkWidth: 130 },
-    md: { iconSize: 44, wordmarkHeight: 30, wordmarkWidth: 160 },
-    lg: { iconSize: 56, wordmarkHeight: 38, wordmarkWidth: 200 },
+    sm: {
+      monoHeight: 34,
+      monoWidth: 55,
+      wordHeight: 28,
+      wordWidth: 172,
+      taglineSize: 'text-[6.5px]',
+    },
+    md: {
+      monoHeight: 44,
+      monoWidth: 71,
+      wordHeight: 36,
+      wordWidth: 220,
+      taglineSize: 'text-[7.5px]',
+    },
+    lg: {
+      monoHeight: 56,
+      monoWidth: 90,
+      wordHeight: 46,
+      wordWidth: 280,
+      taglineSize: 'text-[9.5px]',
+    },
   };
 
   const current = dimensions[size];
@@ -29,58 +47,57 @@ export default function Logo({
   return (
     <Link
       href="/"
-      className={`inline-flex items-center gap-3 group select-none transition-opacity hover:opacity-95 ${className}`}
-      aria-label="Merit & Beyond — People · Process · Performance"
+      className={`inline-flex items-center gap-2.5 sm:gap-3 group select-none transition-opacity hover:opacity-95 ${className}`}
+      aria-label="Merit & Beyond — PEOPLE | PROCESSES | POSSIBILITIES"
     >
-      {/* 3D Liquid Gold MB Monogram Emblem */}
-      <div className="relative flex-shrink-0">
-        <div
-          className={`rounded-xl overflow-hidden border transition-all duration-300 group-hover:scale-105 shadow-sm ${
-            isDark
-              ? 'border-champagne-300 bg-[#E8D5B0]/30 shadow-subtle'
-              : 'border-champagne-400/80 bg-white/10 shadow-md ring-1 ring-champagne-300/30'
-          }`}
-          style={{ width: current.iconSize, height: current.iconSize }}
-        >
-          <Image
-            src="/images/logo-icon.png"
-            alt="Merit & Beyond MB Monogram"
-            width={current.iconSize * 2}
-            height={current.iconSize * 2}
-            className="w-full h-full object-cover"
-            priority
-          />
-        </div>
+      {/* 3D Liquid Gold MB Monogram Emblem — Clean & Transparent */}
+      <div
+        className="relative flex-shrink-0 transition-transform duration-300 group-hover:scale-105"
+        style={{ width: current.monoWidth, height: current.monoHeight }}
+      >
+        <Image
+          src="/images/logo-monogram-clean.png"
+          alt="Merit & Beyond MB Monogram"
+          width={current.monoWidth * 2}
+          height={current.monoHeight * 2}
+          className="w-full h-full object-contain filter drop-shadow-[0_2px_4px_rgba(41,35,29,0.08)]"
+          priority
+        />
       </div>
 
-      {/* Official "Merit & Beyond" in Liquid Drop Font + Tagline */}
+      {/* Official "Merit & Beyond" Wordmark + Exact Tagline (PEOPLE | PROCESSES | POSSIBILITIES) */}
       {!monogramOnly && (
-        <div className="flex flex-col justify-center">
+        <div className="flex flex-col justify-center" style={{ width: current.wordWidth }}>
           <div
-            className="relative flex items-center overflow-hidden"
-            style={{ height: current.wordmarkHeight, width: current.wordmarkWidth }}
+            className="relative w-full"
+            style={{ height: current.wordHeight }}
           >
             <Image
-              src="/images/logo-wordmark.png"
+              src="/images/logo-wordmark-clean.png"
               alt="Merit & Beyond"
-              width={current.wordmarkWidth * 2}
-              height={current.wordmarkHeight * 2}
-              className={`h-full w-auto object-contain transition-transform group-hover:scale-[1.01] ${
+              fill
+              sizes="(max-width: 768px) 172px, 220px"
+              className={`object-contain object-left transition-transform group-hover:scale-[1.01] ${
                 isDark
-                  ? 'mix-blend-multiply contrast-105'
-                  : 'brightness-125 filter drop-shadow-[0_1px_3px_rgba(0,0,0,0.6)]'
+                  ? 'filter drop-shadow-[0_1px_2px_rgba(41,35,29,0.08)]'
+                  : 'filter brightness-125 drop-shadow-[0_2px_6px_rgba(0,0,0,0.7)]'
               }`}
               priority
             />
           </div>
 
-          <span
-            className={`text-[8px] sm:text-[9px] tracking-[0.24em] uppercase font-sans font-semibold mt-0.5 ${
-              isDark ? 'text-copper-600' : 'text-champagne-300'
+          {/* Exact Brand Tagline: PEOPLE | PROCESSES | POSSIBILITIES */}
+          <div
+            className={`w-full flex items-center justify-between ${current.taglineSize} tracking-[0.11em] uppercase font-sans font-semibold mt-1 select-none ${
+              isDark ? 'text-[#846A3F]' : 'text-[#E1D0AF]'
             }`}
           >
-            People · Process · Performance
-          </span>
+            <span>PEOPLE</span>
+            <span className="text-[7px] sm:text-[8px] opacity-50 font-normal">|</span>
+            <span>PROCESSES</span>
+            <span className="text-[7px] sm:text-[8px] opacity-50 font-normal">|</span>
+            <span>POSSIBILITIES</span>
+          </div>
         </div>
       )}
     </Link>
