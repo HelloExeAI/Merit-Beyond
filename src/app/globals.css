@@ -6,7 +6,8 @@
 
 :root {
   --font-dm-serif: 'DM Serif Display', Georgia, serif;
-  --font-inter: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-apple: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "SF Pro", system-ui, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-inter: var(--font-apple);
   --bg-ivory: #F3E9D8;
   --color-charcoal: #29231D;
   --color-gold: #B69A6A;
@@ -14,13 +15,29 @@
   --color-sage: #E8EEE9;
 }
 
+html.dark {
+  --bg-ivory: #12100E;
+  --color-charcoal: #FAF5ED;
+  --color-gold: #D4B886;
+  --color-navy: #7FA0C6;
+  --color-sage: #2A362D;
+  color-scheme: dark;
+}
+
 body {
   color: #29231D;
   background-color: #F3E9D8;
-  font-family: var(--font-inter);
+  font-family: var(--font-apple);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
   overflow-x: hidden;
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+html.dark body {
+  color: #FAF5ED;
+  background-color: #12100E;
 }
 
 /* Custom editorial scrollbar */

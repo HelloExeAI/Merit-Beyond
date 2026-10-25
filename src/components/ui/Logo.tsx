@@ -79,7 +79,7 @@ export default function Logo({
               sizes="(max-width: 768px) 172px, 220px"
               className={`object-contain object-left transition-transform group-hover:scale-[1.01] ${
                 isDark
-                  ? 'filter drop-shadow-[0_1px_2px_rgba(41,35,29,0.08)]'
+                  ? 'filter drop-shadow-[0_1px_2px_rgba(41,35,29,0.08)] dark:brightness-125 dark:drop-shadow-[0_2px_6px_rgba(0,0,0,0.7)]'
                   : 'filter brightness-125 drop-shadow-[0_2px_6px_rgba(0,0,0,0.7)]'
               }`}
               priority
@@ -89,7 +89,7 @@ export default function Logo({
           {/* Exact Brand Tagline: PEOPLE | PROCESSES | POSSIBILITIES */}
           <div
             className={`w-full flex items-center justify-between ${current.taglineSize} tracking-[0.11em] uppercase font-sans font-semibold mt-1 select-none ${
-              isDark ? 'text-[#846A3F]' : 'text-[#E1D0AF]'
+              isDark ? 'text-[#846A3F] dark:text-[#D4B886]' : 'text-[#E1D0AF]'
             }`}
           >
             <span>PEOPLE</span>

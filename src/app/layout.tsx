@@ -60,8 +60,25 @@ export default function RootLayout({
           href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500;600;700&display=swap"
           rel="stylesheet"
         />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                try {
+                  var stored = localStorage.getItem('mb_theme');
+                  var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+                  if (stored === 'dark' || (!stored && prefersDark)) {
+                    document.documentElement.classList.add('dark');
+                  } else {
+                    document.documentElement.classList.remove('dark');
+                  }
+                } catch (e) {}
+              })();
+            `,
+          }}
+        />
       </head>
-      <body className="min-h-screen flex flex-col bg-[#F3E9D8] text-[#29231D] font-sans antialiased selection:bg-[#B69A6A]/30 selection:text-[#29231D]">
+      <body className="min-h-screen flex flex-col bg-[#F3E9D8] dark:bg-[#12100E] text-[#29231D] dark:text-[#FAF5ED] font-sans antialiased selection:bg-[#B69A6A]/30 selection:text-[#29231D] dark:selection:text-[#FAF5ED] transition-colors duration-200">
         <ContentProvider>
           <Navbar />
           <main className="flex-grow">

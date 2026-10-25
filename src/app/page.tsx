@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { 
   ArrowRight, 
   ArrowUpRight,
@@ -28,6 +29,29 @@ import { industriesData } from '@/data/industries';
 import { insightsData } from '@/data/insights';
 import { useContent } from '@/lib/contentContext';
 
+const serviceVisuals: Record<string, { image: string; outcome: string }> = {
+  'strategic-hr-consulting': {
+    image: '/images/service-strategic-hr.jpg',
+    outcome: 'Workforce Strategy & Growth Roadmaps',
+  },
+  'fractional-chro': {
+    image: '/images/service-fractional-chro.jpg',
+    outcome: 'C-Suite Perspective & Execution Rhythm',
+  },
+  'hr-transformation': {
+    image: '/images/service-hr-transformation.jpg',
+    outcome: 'Agile Systems & Digital Workflows',
+  },
+  'labour-law-compliance-audits': {
+    image: '/images/service-compliance-audit.jpg',
+    outcome: 'Structured Governance & Risk Confidence',
+  },
+  'organisational-development': {
+    image: '/images/service-org-development.jpg',
+    outcome: 'Leadership Alignment & Team Culture',
+  },
+};
+
 export default function HomePage() {
   const { content } = useContent();
 
@@ -37,17 +61,17 @@ export default function HomePage() {
   const industries = content.industries || industriesData;
 
   return (
-    <div className="flex flex-col w-full overflow-hidden">
+    <div className="flex flex-col w-full overflow-hidden bg-[#F3E9D8] dark:bg-[#12100E] text-[#29231D] dark:text-[#FAF5ED] transition-colors duration-200">
       {/* ========================================================
           SECTION 1 — HERO
           ======================================================== */}
-      <section className="relative pt-12 pb-20 md:pt-20 md:pb-32 bg-[#F3E9D8] border-b border-[#B69A6A]/20">
+      <section className="relative pt-10 pb-16 md:pt-16 md:pb-28 bg-[#F3E9D8] dark:bg-[#12100E] border-b border-[#B69A6A]/20 dark:border-[#B69A6A]/15">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-8 items-center">
             {/* Left Content Column */}
             <div className="lg:col-span-7 space-y-6">
               {/* Eyebrow */}
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/70 border border-[#B69A6A]/40 text-[#29231D]">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/70 dark:bg-[#1E1914]/80 border border-[#B69A6A]/40 text-[#29231D] dark:text-[#FAF5ED]">
                 <span className="w-1.5 h-1.5 rounded-full bg-[#B69A6A]" />
                 <span className="text-[11px] font-bold tracking-[0.2em] uppercase">
                   {content.home.hero.eyebrow}
@@ -55,12 +79,12 @@ export default function HomePage() {
               </div>
 
               {/* H1 Headline */}
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-serif text-[#29231D] tracking-tight leading-[1.12]">
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-serif text-[#29231D] dark:text-[#FAF5ED] tracking-tight leading-[1.12]">
                 {content.home.hero.headline}
               </h1>
 
               {/* Supporting Copy */}
-              <p className="text-base sm:text-lg text-[#29231D]/80 leading-relaxed font-sans max-w-2xl">
+              <p className="text-base sm:text-lg text-[#29231D]/80 dark:text-[#FAF5ED]/80 leading-relaxed font-sans max-w-2xl">
                 {content.home.hero.subheadline}
               </p>
 
@@ -68,68 +92,77 @@ export default function HomePage() {
               <div className="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
                 <Link
                   href={content.home.hero.ctaPrimaryLink || '/contact'}
-                  className="inline-flex items-center justify-center gap-2.5 px-7 py-3.5 rounded-lg bg-[#29231D] hover:bg-[#1E1914] text-white font-semibold text-xs tracking-wider uppercase shadow-md transition-all group"
+                  className="inline-flex items-center justify-center gap-2.5 px-7 py-3.5 rounded-lg bg-[#29231D] dark:bg-[#FAF5ED] hover:bg-[#1E1914] dark:hover:bg-white text-white dark:text-[#12100E] font-semibold text-xs tracking-wider uppercase shadow-md transition-all group"
                 >
                   <span>{content.home.hero.ctaPrimaryText}</span>
-                  <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1 text-[#B69A6A]" />
+                  <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1 text-[#B69A6A] dark:text-[#846A3F]" />
                 </Link>
 
                 <Link
                   href={content.home.hero.ctaSecondaryLink || '/services'}
-                  className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-lg border border-[#29231D]/40 hover:border-[#29231D] text-[#29231D] font-semibold text-xs tracking-wider uppercase bg-transparent transition-all"
+                  className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-lg border border-[#29231D]/40 dark:border-[#FAF5ED]/40 hover:border-[#29231D] dark:hover:border-[#FAF5ED] text-[#29231D] dark:text-[#FAF5ED] font-semibold text-xs tracking-wider uppercase bg-transparent transition-all"
                 >
                   <span>{content.home.hero.ctaSecondaryText}</span>
                 </Link>
               </div>
 
               {/* Optional Microcopy */}
-              <p className="text-xs text-[#846A3F] font-medium tracking-wide pt-1">
+              <p className="text-xs text-[#846A3F] dark:text-[#D4B886] font-medium tracking-wide pt-1">
                 Practical thinking. Clear priorities. Better execution.
               </p>
             </div>
 
-            {/* Right Editorial Composition */}
+            {/* Right Editorial Composition: High-Prestige Outcome Visual */}
             <div className="lg:col-span-5">
-              <div className="relative rounded-2xl bg-white p-7 sm:p-9 border border-[#B69A6A]/30 shadow-[0_12px_36px_rgba(41,35,29,0.06)] space-y-6">
-                <div className="flex items-center justify-between border-b border-[#F3E9D8] pb-4">
-                  <span className="text-[10px] font-bold tracking-[0.2em] text-[#846A3F] uppercase">
-                    Advisory Mandate
-                  </span>
-                  <span className="text-xs font-serif text-[#29231D]">Merit &amp; Beyond</span>
-                </div>
+              <div className="relative rounded-2xl bg-white dark:bg-[#1C1814] p-3 sm:p-4 border border-[#B69A6A]/30 dark:border-[#B69A6A]/20 shadow-[0_16px_40px_rgba(41,35,29,0.08)] dark:shadow-[0_16px_40px_rgba(0,0,0,0.5)] space-y-4">
+                {/* High-Resolution Hero Visual */}
+                <div className="relative w-full h-64 sm:h-72 rounded-xl overflow-hidden shadow-inner group">
+                  <Image
+                    src="/images/hero-executive-strategy.jpg"
+                    alt="Merit & Beyond Executive Strategy Session"
+                    fill
+                    sizes="(max-width: 1024px) 100vw, 450px"
+                    className="object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105"
+                    priority
+                  />
+                  {/* Subtle Gradient Overlays for Luxury Contrast */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#14110F]/90 via-transparent to-transparent pointer-events-none" />
 
-                <div className="space-y-4">
-                  <div className="p-4 rounded-xl bg-[#FAF5ED] border border-[#B69A6A]/20">
-                    <span className="text-xs font-semibold text-[#552A19] block mb-1">
-                      Strategic HR &amp; Fractional Leadership
+                  {/* Floating Status Pill */}
+                  <div className="absolute top-3 right-3 px-3 py-1 rounded-full bg-white/90 dark:bg-[#1E1914]/90 backdrop-blur-md border border-[#B69A6A]/50 shadow-md">
+                    <span className="text-[10px] font-bold text-[#846A3F] dark:text-[#D4B886] tracking-wider uppercase">
+                      Executive Mandate
                     </span>
-                    <p className="text-xs text-[#29231D]/80 leading-relaxed">
-                      Structured advisory cadences connecting corporate growth milestones with HR operating rhythm.
-                    </p>
                   </div>
 
-                  <div className="p-4 rounded-xl bg-[#FAF5ED] border border-[#B69A6A]/20">
-                    <span className="text-xs font-semibold text-[#552A19] block mb-1">
-                      Statutory Audits &amp; Governance
-                    </span>
-                    <p className="text-xs text-[#29231D]/80 leading-relaxed">
-                      Defined-scope documentation reviews, registers checklists, and risk prioritization without legal overreach.
-                    </p>
-                  </div>
-
-                  <div className="p-4 rounded-xl bg-[#E8EEE9] border border-[#D4DFD6]">
-                    <span className="text-xs font-semibold text-[#26374B] block mb-1">
-                      Capability Development
-                    </span>
-                    <p className="text-xs text-[#29231D]/80 leading-relaxed">
-                      Flagship performance management workshops and manager conversation labs built around daily execution.
-                    </p>
+                  {/* Bottom Floating Caption Card */}
+                  <div className="absolute bottom-3 inset-x-3 p-3 rounded-lg bg-black/60 dark:bg-[#161310]/80 backdrop-blur-md border border-white/10 text-white">
+                    <div className="flex items-center justify-between text-[11px] font-medium text-[#F3E9D8]">
+                      <span className="font-serif">Advisory in Deliberation</span>
+                      <span className="text-[#D4B886] font-mono text-[10px] tracking-wide">+42% Execution Clarity</span>
+                    </div>
                   </div>
                 </div>
 
-                <div className="pt-2 border-t border-[#F3E9D8] flex items-center justify-between text-xs text-[#846A3F]">
-                  <span>5 Core Disciplines</span>
-                  <span className="font-semibold text-[#29231D]">India &amp; Global Advisory</span>
+                {/* Outcome Summary Tiles */}
+                <div className="grid grid-cols-2 gap-3 pt-1">
+                  <div className="p-3 rounded-xl bg-[#FAF5ED] dark:bg-[#251F1A] border border-[#B69A6A]/20">
+                    <span className="text-[11px] font-bold text-[#552A19] dark:text-[#D4B886] block mb-0.5">
+                      Workforce Roadmaps
+                    </span>
+                    <p className="text-[11px] text-[#29231D]/80 dark:text-[#FAF5ED]/75 leading-tight">
+                      People priorities tied to business milestones.
+                    </p>
+                  </div>
+
+                  <div className="p-3 rounded-xl bg-[#FAF5ED] dark:bg-[#251F1A] border border-[#B69A6A]/20">
+                    <span className="text-[11px] font-bold text-[#552A19] dark:text-[#D4B886] block mb-0.5">
+                      Executive Rhythm
+                    </span>
+                    <p className="text-[11px] text-[#29231D]/80 dark:text-[#FAF5ED]/75 leading-tight">
+                      Practical cadence between leadership and execution.
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -249,23 +282,23 @@ export default function HomePage() {
       {/* ========================================================
           SECTION 4 — ADVISORY SERVICES (5 CORE DISCIPLINES VERBATIM)
           ======================================================== */}
-      <section className="py-20 md:py-28 bg-[#F3E9D8]">
+      <section className="py-20 md:py-28 bg-[#F3E9D8] dark:bg-[#12100E] border-b border-[#B69A6A]/20 dark:border-[#B69A6A]/15">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
             <div className="max-w-2xl">
-              <span className="text-[11px] font-bold tracking-[0.2em] text-[#846A3F] uppercase block mb-2">
+              <span className="text-[11px] font-bold tracking-[0.2em] text-[#846A3F] dark:text-[#D4B886] uppercase block mb-2">
                 Core Consulting Practice
               </span>
-              <h2 className="text-3xl sm:text-4xl font-serif text-[#29231D] tracking-tight">
+              <h2 className="text-3xl sm:text-4xl font-serif text-[#29231D] dark:text-[#FAF5ED] tracking-tight">
                 The right support for your people priorities.
               </h2>
-              <p className="text-sm sm:text-base text-[#29231D]/80 mt-3 font-sans leading-relaxed">
+              <p className="text-sm sm:text-base text-[#29231D]/80 dark:text-[#FAF5ED]/80 mt-3 font-sans leading-relaxed">
                 From strategic direction to process improvement, our advisory services are designed around your organisation’s needs, context and stage of growth.
               </p>
             </div>
             <Link
               href="/services"
-              className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-[#29231D] hover:text-[#552A19] pb-1 border-b border-[#29231D] transition-colors"
+              className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-[#29231D] dark:text-[#FAF5ED] hover:text-[#552A19] dark:hover:text-[#D4B886] pb-1 border-b border-[#29231D] dark:border-[#FAF5ED] transition-colors"
             >
               <span>Explore Our Services</span>
               <ArrowRight className="w-3.5 h-3.5" />
@@ -273,41 +306,61 @@ export default function HomePage() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {coreServices.map((service) => (
-              <div
-                key={service.id}
-                className="flex flex-col justify-between p-8 rounded-xl bg-white border border-[#B69A6A]/30 shadow-subtle hover:shadow-card hover:border-[#B69A6A] transition-all group"
-              >
-                <div className="space-y-4">
-                  <div className="flex items-center justify-between">
-                    <span className="text-xs font-mono font-semibold text-[#846A3F]">
-                      {service.categoryNumber}
-                    </span>
-                    <span className="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded bg-[#FAF5ED] text-[#846A3F] border border-[#B69A6A]/20">
-                      Advisory
-                    </span>
+            {coreServices.map((service) => {
+              const visual = serviceVisuals[service.slug];
+              return (
+                <div
+                  key={service.id}
+                  className="flex flex-col justify-between p-6 sm:p-7 rounded-xl bg-white dark:bg-[#1C1814] border border-[#B69A6A]/30 dark:border-[#B69A6A]/20 shadow-subtle hover:shadow-card hover:border-[#B69A6A] transition-all group"
+                >
+                  <div className="space-y-4">
+                    {/* Outcome Photography */}
+                    {visual && (
+                      <div className="relative w-full h-44 sm:h-48 rounded-lg overflow-hidden border border-[#B69A6A]/20 dark:border-[#B69A6A]/15 shadow-sm">
+                        <Image
+                          src={visual.image}
+                          alt={service.title}
+                          fill
+                          sizes="(max-width: 768px) 100vw, 360px"
+                          className="object-cover object-center transition-transform duration-500 group-hover:scale-105"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent pointer-events-none" />
+                        <div className="absolute bottom-2 inset-x-2 px-2.5 py-1 rounded bg-black/65 dark:bg-[#161310]/85 backdrop-blur-sm border border-white/10 text-[10px] font-medium text-[#F3E9D8] tracking-wide">
+                          {visual.outcome}
+                        </div>
+                      </div>
+                    )}
+
+                    <div className="flex items-center justify-between">
+                      <span className="text-xs font-mono font-semibold text-[#846A3F] dark:text-[#D4B886]">
+                        {service.categoryNumber}
+                      </span>
+                      <span className="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded bg-[#FAF5ED] dark:bg-[#251F1A] text-[#846A3F] dark:text-[#D4B886] border border-[#B69A6A]/20">
+                        Advisory
+                      </span>
+                    </div>
+
+                    <h3 className="text-xl font-serif text-[#29231D] dark:text-[#FAF5ED] font-semibold group-hover:text-[#552A19] dark:group-hover:text-[#D4B886] transition-colors">
+                      {service.title}
+                    </h3>
+
+                    <p className="text-xs sm:text-sm text-[#29231D]/75 dark:text-[#FAF5ED]/75 leading-relaxed font-sans">
+                      {service.shortSubtitle}
+                    </p>
                   </div>
 
-                  <h3 className="text-xl font-serif text-[#29231D] font-semibold group-hover:text-[#552A19] transition-colors">
-                    {service.title}
-                  </h3>
-
-                  <p className="text-xs sm:text-sm text-[#29231D]/75 leading-relaxed font-sans">
-                    {service.shortSubtitle}
-                  </p>
+                  <div className="pt-6 mt-6 border-t border-[#F3E9D8] dark:border-[#251F1A] flex items-center justify-between">
+                    <Link
+                      href={`/services/${service.slug}`}
+                      className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#29231D] dark:text-[#FAF5ED] group-hover:text-[#552A19] dark:group-hover:text-[#D4B886] transition-colors"
+                    >
+                      <span>View Scope &amp; Deliverables</span>
+                      <ChevronRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
+                    </Link>
+                  </div>
                 </div>
-
-                <div className="pt-6 mt-6 border-t border-[#F3E9D8] flex items-center justify-between">
-                  <Link
-                    href={`/services/${service.slug}`}
-                    className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#29231D] group-hover:text-[#552A19] transition-colors"
-                  >
-                    <span>View Scope &amp; Deliverables</span>
-                    <ChevronRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
-                  </Link>
-                </div>
-              </div>
-            ))}
+              );
+            })}
 
             {/* Specialist Support Card */}
             <div className="flex flex-col justify-between p-8 rounded-xl bg-[#26374B] text-white border border-[#26374B] shadow-subtle">
@@ -422,25 +475,43 @@ export default function HomePage() {
             </div>
 
             {/* Featured Flagship Programme Banner */}
-            <div className="lg:col-span-7 bg-white rounded-2xl p-8 sm:p-10 border border-[#B8C8BC] shadow-subtle space-y-6">
-              <div className="flex items-center justify-between border-b border-[#E8EEE9] pb-4">
-                <span className="text-[10px] font-bold tracking-[0.2em] uppercase px-2.5 py-1 rounded bg-[#E8EEE9] text-[#26374B]">
+            <div className="lg:col-span-7 bg-white dark:bg-[#1C1814] rounded-2xl p-6 sm:p-9 border border-[#B8C8BC] dark:border-[#2C382F] shadow-subtle space-y-6">
+              {/* Masterclass Outcome Image */}
+              <div className="relative w-full h-52 sm:h-60 rounded-xl overflow-hidden border border-[#B8C8BC]/40 dark:border-[#2C382F] shadow-inner group">
+                <Image
+                  src="/images/learning-masterclass.jpg"
+                  alt="Merit & Beyond Masterclass Learning Workshop"
+                  fill
+                  sizes="(max-width: 1024px) 100vw, 650px"
+                  className="object-cover object-center transition-transform duration-700 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#14110F]/85 via-transparent to-transparent pointer-events-none" />
+                <div className="absolute bottom-3 inset-x-3 flex items-center justify-between text-xs text-[#F3E9D8]">
+                  <span className="font-serif">Interactive Capability Workshop</span>
+                  <span className="px-2.5 py-0.5 rounded-full bg-[#26374B]/90 border border-[#B69A6A]/40 text-[10px] uppercase font-bold tracking-wider text-[#D4B886]">
+                    Manager Coaching Lab
+                  </span>
+                </div>
+              </div>
+
+              <div className="flex items-center justify-between border-b border-[#E8EEE9] dark:border-[#251F1A] pb-4">
+                <span className="text-[10px] font-bold tracking-[0.2em] uppercase px-2.5 py-1 rounded bg-[#E8EEE9] dark:bg-[#251F1A] text-[#26374B] dark:text-[#D4B886]">
                   Featured Programme
                 </span>
-                <span className="text-xs text-[#78716C]">Interactive Workshop</span>
+                <span className="text-xs text-[#78716C] dark:text-[#C2B5A0]">Interactive Workshop</span>
               </div>
 
               <div>
-                <h3 className="text-2xl font-serif text-[#29231D] font-semibold leading-snug">
+                <h3 className="text-2xl font-serif text-[#29231D] dark:text-[#FAF5ED] font-semibold leading-snug">
                   {flagship.title}
                 </h3>
-                <p className="text-xs sm:text-sm text-[#29231D]/80 mt-3 font-sans leading-relaxed">
+                <p className="text-xs sm:text-sm text-[#29231D]/80 dark:text-[#FAF5ED]/80 mt-3 font-sans leading-relaxed">
                   {flagship.shortDescription}
                 </p>
               </div>
 
-              <div className="space-y-2.5 text-xs text-[#29231D]/80">
-                <div className="font-semibold text-[#26374B]">Participants will work on:</div>
+              <div className="space-y-2.5 text-xs text-[#29231D]/80 dark:text-[#FAF5ED]/80">
+                <div className="font-semibold text-[#26374B] dark:text-[#D4B886]">Participants will work on:</div>
                 <ul className="space-y-1.5 pl-4 list-disc marker:text-[#B69A6A]">
                   <li>Connecting business priorities to team and individual goals.</li>
                   <li>Distinguishing true outcomes and measures from mere activity indicators.</li>
@@ -449,10 +520,10 @@ export default function HomePage() {
                 </ul>
               </div>
 
-              <div className="pt-4 border-t border-[#E8EEE9] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+              <div className="pt-4 border-t border-[#E8EEE9] dark:border-[#251F1A] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                 <div>
-                  <span className="text-[11px] text-[#78716C] block">Pilot Duration</span>
-                  <span className="text-xs font-semibold text-[#29231D]">{flagship.pilotDuration}</span>
+                  <span className="text-[11px] text-[#78716C] dark:text-[#C2B5A0] block">Pilot Duration</span>
+                  <span className="text-xs font-semibold text-[#29231D] dark:text-[#FAF5ED]">{flagship.pilotDuration}</span>
                 </div>
                 <Link
                   href={`/learning/programmes/${flagship.slug}`}
