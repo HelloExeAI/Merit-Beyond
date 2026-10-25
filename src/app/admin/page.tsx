@@ -72,28 +72,24 @@ export default function AdminPage() {
   // Notification / Toast
   const [toastMessage, setToastMessage] = useState<{ text: string; type: 'success' | 'error' | 'info' } | null>(null);
 
-  // Publish Dialog State
-  const [showPublishModal, setShowPublishModal] = useState(false);
-  const [ghToken, setGhToken] = useState('');
-  const [publishing, setPublishing] = useState(false);
-
   // Content from context
   const {
     content,
     isCustomized,
     lastSaved,
+    isSyncing,
     updateContent,
     updateSection,
     saveChanges,
     resetToDefaults,
     exportBackup,
     importBackup,
-    publishToGitHub,
   } = useContent();
 
   // Working copy for the editor
   const [formData, setFormData] = useState(content);
   const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
+  const [isSavingLive, setIsSavingLive] = useState(false);
 
   // Check existing session
   useEffect(() => {
@@ -142,38 +138,24 @@ export default function AdminPage() {
     showToast('Admin session terminated.', 'info');
   };
 
-  const handleSave = () => {
-    const success = saveChanges(formData);
-    if (success) {
+  const handleSave = async () => {
+    setIsSavingLive(true);
+    const res = await saveChanges(formData);
+    setIsSavingLive(false);
+    if (res.success) {
       setHasUnsavedChanges(false);
-      showToast('All changes saved! Live website updated across all active windows.', 'success');
+      showToast('✓ Saved! Changes are now LIVE across meritandbeyond.in', 'success');
     } else {
-      showToast('Error saving changes to local storage.', 'error');
+      showToast(res.error || 'Error saving changes.', 'error');
     }
   };
 
-  const handleReset = () => {
+  const handleReset = async () => {
     if (window.confirm('Are you sure you want to reset all website content to factory defaults? This cannot be undone.')) {
-      resetToDefaults();
+      await resetToDefaults();
       setFormData(content);
       setHasUnsavedChanges(false);
-      showToast('Website content restored to factory defaults.', 'info');
-    }
-  };
-
-  const handlePublishGitHub = async () => {
-    if (!ghToken.trim()) {
-      showToast('Please provide a GitHub Personal Access Token.', 'error');
-      return;
-    }
-    setPublishing(true);
-    const res = await publishToGitHub(ghToken);
-    setPublishing(false);
-    if (res.success) {
-      setShowPublishModal(false);
-      showToast(res.message, 'success');
-    } else {
-      showToast(res.message, 'error');
+      showToast('Website content restored to factory defaults and live.', 'info');
     }
   };
 
@@ -181,9 +163,9 @@ export default function AdminPage() {
     const file = e.target.files?.[0];
     if (!file) return;
     const reader = new FileReader();
-    reader.onload = (event) => {
+    reader.onload = async (event) => {
       const text = event.target?.result as string;
-      const res = importBackup(text);
+      const res = await importBackup(text);
       if (res.success) {
         showToast('Backup restored successfully!', 'success');
       } else {
@@ -421,22 +403,23 @@ export default function AdminPage() {
               <span className="hidden sm:inline">Reset</span>
             </button>
 
-            {/* Publish to GitHub Modal Trigger */}
-            <button
-              onClick={() => setShowPublishModal(true)}
-              className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-[#241E18] hover:bg-[#2F271F] border border-[#B69A6A]/50 text-xs text-[#B69A6A] font-semibold transition-colors"
-            >
-              <CloudUpload className="w-3.5 h-3.5" />
-              <span>Publish to GitHub</span>
-            </button>
-
             {/* Master Save Button */}
             <button
               onClick={handleSave}
-              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-[#B69A6A] hover:bg-[#C5AA7A] text-[#1E1914] text-xs font-bold transition-all shadow-md hover:shadow-[#B69A6A]/20"
+              disabled={isSavingLive}
+              className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-lg bg-[#B69A6A] hover:bg-[#C5AA7A] text-[#1E1914] text-xs font-bold transition-all shadow-md hover:shadow-[#B69A6A]/20 disabled:opacity-60"
             >
-              <Save className="w-4 h-4" />
-              <span>Save Changes</span>
+              {isSavingLive ? (
+                <>
+                  <div className="w-3.5 h-3.5 border-2 border-[#1E1914] border-t-transparent rounded-full animate-spin" />
+                  <span>Syncing Live...</span>
+                </>
+              ) : (
+                <>
+                  <Save className="w-4 h-4" />
+                  <span>Save Changes</span>
+                </>
+              )}
             </button>
 
             {/* Logout */}
@@ -1628,81 +1611,25 @@ export default function AdminPage() {
               </span>
               <button
                 onClick={handleSave}
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#B69A6A] hover:bg-[#C5AA7A] text-[#1E1914] text-xs font-bold transition-all shadow-lg hover:shadow-[#B69A6A]/20"
+                disabled={isSavingLive}
+                className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl bg-[#B69A6A] hover:bg-[#C5AA7A] text-[#1E1914] text-xs font-bold transition-all shadow-lg hover:shadow-[#B69A6A]/20 disabled:opacity-60"
               >
-                <Save className="w-4 h-4" />
-                <span>Save All Changes</span>
+                {isSavingLive ? (
+                  <>
+                    <div className="w-3.5 h-3.5 border-2 border-[#1E1914] border-t-transparent rounded-full animate-spin" />
+                    <span>Syncing Live...</span>
+                  </>
+                ) : (
+                  <>
+                    <Save className="w-4 h-4" />
+                    <span>Save All Changes</span>
+                  </>
+                )}
               </button>
             </div>
           </main>
         </div>
       </div>
-
-      {/* GitHub Publish Modal */}
-      {showPublishModal && (
-        <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="w-full max-w-lg bg-[#241E18] border border-[#B69A6A]/40 rounded-2xl p-6 sm:p-8 space-y-5 shadow-2xl relative">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2.5">
-                <CloudUpload className="w-5 h-5 text-[#B69A6A]" />
-                <h3 className="font-serif text-lg text-white font-medium">Publish Directly to Live GitHub</h3>
-              </div>
-              <button
-                onClick={() => setShowPublishModal(false)}
-                className="text-[#DEC8A9]/50 hover:text-white text-sm"
-              >
-                ✕
-              </button>
-            </div>
-
-            <p className="text-xs text-[#DEC8A9]/70 leading-relaxed">
-              This commits your updated <code className="text-[#B69A6A]">public/content.json</code> directly to the repository (<code className="text-[#B69A6A]">HelloExeAI/Merit-Beyond</code>) via GitHub REST API, triggering automated live deployment to <code className="text-[#B69A6A]">meritandbeyond.in</code> for all visitors worldwide.
-            </p>
-
-            <div>
-              <label className="block text-xs uppercase tracking-wider text-[#B69A6A] font-semibold mb-2">
-                GitHub Personal Access Token (PAT)
-              </label>
-              <input
-                type="password"
-                value={ghToken}
-                onChange={(e) => setGhToken(e.target.value)}
-                placeholder="ghp_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-                className="w-full px-3.5 py-2.5 bg-[#1A1612] border border-[#B69A6A]/30 rounded-xl text-white text-xs font-mono focus:outline-none focus:border-[#B69A6A]"
-              />
-              <p className="text-[11px] text-[#DEC8A9]/40 mt-1.5">
-                Token requires <span className="font-mono text-[#B69A6A]">repo</span> or <span className="font-mono text-[#B69A6A]">contents:write</span> permission. Your token is never stored and only used in-flight for this single commit.
-              </p>
-            </div>
-
-            <div className="flex items-center justify-end gap-3 pt-4 border-t border-[#B69A6A]/20">
-              <button
-                onClick={() => setShowPublishModal(false)}
-                className="px-4 py-2 rounded-xl bg-[#1E1914] text-xs text-[#DEC8A9] hover:text-white"
-              >
-                Cancel
-              </button>
-              <button
-                onClick={handlePublishGitHub}
-                disabled={publishing}
-                className="inline-flex items-center gap-2 px-5 py-2 rounded-xl bg-[#B69A6A] hover:bg-[#C5AA7A] text-[#1E1914] text-xs font-bold transition-all disabled:opacity-50"
-              >
-                {publishing ? (
-                  <>
-                    <div className="w-3.5 h-3.5 border-2 border-[#1E1914] border-t-transparent rounded-full animate-spin" />
-                    <span>Committing to GitHub...</span>
-                  </>
-                ) : (
-                  <>
-                    <CloudUpload className="w-4 h-4" />
-                    <span>Publish to Live Site</span>
-                  </>
-                )}
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 }
