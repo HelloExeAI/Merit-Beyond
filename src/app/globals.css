@@ -72,3 +72,85 @@ html.dark body {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
+/* ========================================================
+   APPLE-INSPIRED LIQUID GLASS EFFECT SYSTEM
+   ======================================================== */
+.liquid-glass {
+  background: rgba(255, 255, 255, 0.65);
+  backdrop-filter: blur(24px) saturate(160%);
+  -webkit-backdrop-filter: blur(24px) saturate(160%);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  box-shadow: 
+    inset 0 1px 1px 0 rgba(255, 255, 255, 0.85),
+    inset 0 -1px 1px 0 rgba(182, 154, 106, 0.2),
+    0 12px 36px -6px rgba(41, 35, 29, 0.08);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.liquid-glass:hover {
+  background: rgba(255, 255, 255, 0.82);
+  border-color: rgba(182, 154, 106, 0.55);
+  box-shadow: 
+    inset 0 1px 2px 0 rgba(255, 255, 255, 0.95),
+    0 20px 48px -8px rgba(41, 35, 29, 0.12),
+    0 0 24px 0 rgba(182, 154, 106, 0.18);
+  transform: translateY(-2px);
+}
+
+html.dark .liquid-glass {
+  background: rgba(28, 24, 20, 0.65);
+  backdrop-filter: blur(24px) saturate(160%);
+  -webkit-backdrop-filter: blur(24px) saturate(160%);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 
+    inset 0 1px 1px 0 rgba(255, 255, 255, 0.15),
+    inset 0 -1px 1px 0 rgba(182, 154, 106, 0.18),
+    0 16px 40px -6px rgba(0, 0, 0, 0.55);
+}
+
+html.dark .liquid-glass:hover {
+  background: rgba(35, 29, 24, 0.82);
+  border-color: rgba(182, 154, 106, 0.45);
+  box-shadow: 
+    inset 0 1px 2px 0 rgba(255, 255, 255, 0.22),
+    0 24px 56px -8px rgba(0, 0, 0, 0.7),
+    0 0 28px 0 rgba(182, 154, 106, 0.22);
+}
+
+/* Fluid Liquid Specular Sheen Animation */
+.liquid-glass-sheen {
+  position: relative;
+  overflow: hidden;
+}
+
+.liquid-glass-sheen::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -120%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.22) 50%,
+    transparent 100%
+  );
+  transform: skewX(-25deg);
+  pointer-events: none;
+  transition: left 0.85s ease;
+}
+
+.liquid-glass-sheen:hover::after {
+  left: 220%;
+}
+
+html.dark .liquid-glass-sheen::after {
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.08) 50%,
+    transparent 100%
+  );
+}
