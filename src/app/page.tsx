@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import Link from 'next/link';
 import { 
@@ -24,10 +26,15 @@ import { servicesData } from '@/data/services';
 import { flagshipProgramme } from '@/data/learning';
 import { industriesData } from '@/data/industries';
 import { insightsData } from '@/data/insights';
+import { useContent } from '@/lib/contentContext';
 
 export default function HomePage() {
-  const coreServices = servicesData.filter((s) => s.isCoreAdvisory);
-  const featuredInsights = insightsData.slice(0, 3);
+  const { content } = useContent();
+
+  const coreServices = (content.services || servicesData).filter((s) => s.isCoreAdvisory);
+  const featuredInsights = (content.insights || insightsData).slice(0, 3);
+  const flagship = content.learning?.flagship || flagshipProgramme;
+  const industries = content.industries || industriesData;
 
   return (
     <div className="flex flex-col w-full overflow-hidden">
@@ -43,36 +50,35 @@ export default function HomePage() {
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/70 border border-[#B69A6A]/40 text-[#29231D]">
                 <span className="w-1.5 h-1.5 rounded-full bg-[#B69A6A]" />
                 <span className="text-[11px] font-bold tracking-[0.2em] uppercase">
-                  PEOPLE &amp; BUSINESS ADVISORY
+                  {content.home.hero.eyebrow}
                 </span>
               </div>
 
               {/* H1 Headline */}
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-serif text-[#29231D] tracking-tight leading-[1.12]">
-                Better People Decisions. <br className="hidden sm:inline" />
-                <span className="italic font-normal text-[#552A19]">Stronger Business Performance.</span>
+                {content.home.hero.headline}
               </h1>
 
               {/* Supporting Copy */}
               <p className="text-base sm:text-lg text-[#29231D]/80 leading-relaxed font-sans max-w-2xl">
-                We help organisations strengthen people strategy, build effective HR systems and develop workplace capability through practical advisory and learning solutions.
+                {content.home.hero.subheadline}
               </p>
 
               {/* Primary & Secondary CTAs */}
               <div className="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
                 <Link
-                  href="/contact"
+                  href={content.home.hero.ctaPrimaryLink || '/contact'}
                   className="inline-flex items-center justify-center gap-2.5 px-7 py-3.5 rounded-lg bg-[#29231D] hover:bg-[#1E1914] text-white font-semibold text-xs tracking-wider uppercase shadow-md transition-all group"
                 >
-                  <span>Discuss a Requirement</span>
+                  <span>{content.home.hero.ctaPrimaryText}</span>
                   <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1 text-[#B69A6A]" />
                 </Link>
 
                 <Link
-                  href="/learning"
+                  href={content.home.hero.ctaSecondaryLink || '/services'}
                   className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-lg border border-[#29231D]/40 hover:border-[#29231D] text-[#29231D] font-semibold text-xs tracking-wider uppercase bg-transparent transition-all"
                 >
-                  <span>Explore Learning</span>
+                  <span>{content.home.hero.ctaSecondaryText}</span>
                 </Link>
               </div>
 
@@ -426,10 +432,10 @@ export default function HomePage() {
 
               <div>
                 <h3 className="text-2xl font-serif text-[#29231D] font-semibold leading-snug">
-                  {flagshipProgramme.title}
+                  {flagship.title}
                 </h3>
                 <p className="text-xs sm:text-sm text-[#29231D]/80 mt-3 font-sans leading-relaxed">
-                  {flagshipProgramme.shortDescription}
+                  {flagship.shortDescription}
                 </p>
               </div>
 
@@ -446,10 +452,10 @@ export default function HomePage() {
               <div className="pt-4 border-t border-[#E8EEE9] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                 <div>
                   <span className="text-[11px] text-[#78716C] block">Pilot Duration</span>
-                  <span className="text-xs font-semibold text-[#29231D]">{flagshipProgramme.pilotDuration}</span>
+                  <span className="text-xs font-semibold text-[#29231D]">{flagship.pilotDuration}</span>
                 </div>
                 <Link
-                  href={`/learning/programmes/${flagshipProgramme.slug}`}
+                  href={`/learning/programmes/${flagship.slug}`}
                   className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-[#26374B] hover:bg-[#1A2635] text-white text-xs font-semibold tracking-wider uppercase transition-colors"
                 >
                   <span>View Details &amp; Register</span>
@@ -469,17 +475,17 @@ export default function HomePage() {
           <div className="max-w-4xl mx-auto bg-white rounded-2xl p-8 sm:p-12 border border-[#B69A6A]/30 shadow-subtle">
             <div className="flex items-center gap-2 mb-3">
               <span className="text-[10px] font-bold tracking-[0.2em] uppercase px-2.5 py-0.5 rounded bg-[#FAF5ED] text-[#846A3F] border border-[#B69A6A]/30">
-                Controlled Pilot
+                {content.home.quickConsultPromo.badge}
               </span>
-              <span className="text-xs text-[#78716C]">M&amp;B QuickConsult</span>
+              <span className="text-xs text-[#78716C]">{content.home.quickConsultPromo.turnaround}</span>
             </div>
 
             <h2 className="text-2xl sm:text-3xl font-serif text-[#29231D] tracking-tight">
-              A focused conversation. A clearer next step.
+              {content.home.quickConsultPromo.headline}
             </h2>
 
             <p className="text-sm sm:text-base text-[#29231D]/80 mt-3 font-sans leading-relaxed">
-              Connect with an advisor for a short, defined consultation on an HR or workplace challenge. Choose chat or phone, review the session details and pricing, and book when you are ready.
+              {content.home.quickConsultPromo.description}
             </p>
 
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-6 pt-6 border-t border-[#F3E9D8]">
@@ -701,18 +707,18 @@ export default function HomePage() {
             Start the Conversation
           </span>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-serif text-white tracking-tight">
-            Let’s turn your people priorities into practical progress.
+            {content.home.ctaBanner.headline}
           </h2>
           <p className="text-sm sm:text-base text-[#DEC8A9]/90 max-w-2xl mx-auto leading-relaxed font-sans">
-            Tell us what your organisation is working through. We’ll use the initial conversation to understand the requirement and identify an appropriate next step.
+            {content.home.ctaBanner.description}
           </p>
 
           <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link
-              href="/contact"
+              href={content.home.ctaBanner.buttonLink || '/contact'}
               className="inline-flex items-center gap-2.5 px-8 py-4 rounded-lg bg-[#B69A6A] hover:bg-[#9E8152] text-[#29231D] font-semibold text-xs tracking-wider uppercase shadow-lg transition-all"
             >
-              <span>Discuss a Requirement</span>
+              <span>{content.home.ctaBanner.buttonText}</span>
               <ArrowRight className="w-4 h-4" />
             </Link>
             <Link

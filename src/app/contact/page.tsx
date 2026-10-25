@@ -14,6 +14,8 @@ import {
   Lock
 } from 'lucide-react';
 
+import { useContent } from '@/lib/contentContext';
+
 function LinkedinIcon(props: React.SVGProps<SVGSVGElement>) {
   return (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
@@ -25,6 +27,7 @@ function LinkedinIcon(props: React.SVGProps<SVGSVGElement>) {
 }
 
 function ContactFormContent() {
+  const { content } = useContent();
   const searchParams = useSearchParams();
   const typeParam = searchParams.get('type');
   const programmeParam = searchParams.get('programme');
@@ -434,7 +437,7 @@ function ContactFormContent() {
 
                 <div className="space-y-4 text-xs sm:text-sm text-[#29231D]">
                   <a
-                    href="mailto:ish@meritandbeyond.in"
+                    href={`mailto:${content.global.email}`}
                     className="flex items-center gap-3 text-[#29231D] hover:text-[#846A3F] transition-colors"
                   >
                     <div className="w-9 h-9 rounded-full bg-white border border-[#B69A6A]/30 flex items-center justify-center flex-shrink-0">
@@ -442,12 +445,12 @@ function ContactFormContent() {
                     </div>
                     <div>
                       <span className="text-[10px] text-[#78716C] block uppercase tracking-wider">Email</span>
-                      <span className="font-semibold font-mono">ish@meritandbeyond.in</span>
+                      <span className="font-semibold font-mono">{content.global.email}</span>
                     </div>
                   </a>
 
                   <a
-                    href="tel:+916366056770"
+                    href={`tel:${content.global.phone.replace(/\s+/g, '')}`}
                     className="flex items-center gap-3 text-[#29231D] hover:text-[#846A3F] transition-colors"
                   >
                     <div className="w-9 h-9 rounded-full bg-white border border-[#B69A6A]/30 flex items-center justify-center flex-shrink-0">
@@ -455,7 +458,7 @@ function ContactFormContent() {
                     </div>
                     <div>
                       <span className="text-[10px] text-[#78716C] block uppercase tracking-wider">Phone</span>
-                      <span className="font-semibold">+91 63660 56770</span>
+                      <span className="font-semibold">{content.global.phone}</span>
                     </div>
                   </a>
 

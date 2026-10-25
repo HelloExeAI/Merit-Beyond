@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import Link from 'next/link';
 import { 
@@ -9,46 +11,17 @@ import {
   Target,
   Users2
 } from 'lucide-react';
-import { Metadata } from 'next';
-
-export const metadata: Metadata = {
-  title: 'About Merit & Beyond | People & Business Advisory',
-  description: 'Learn about Merit & Beyond’s practical approach to people strategy, HR systems, leadership capability and workplace effectiveness.',
-};
+import { useContent } from '@/lib/contentContext';
 
 export default function AboutPage() {
-  const approachStages = [
-    {
-      step: '01',
-      name: 'Discover',
-      title: 'Context, Objectives & Immediate Priorities',
-      description: 'We listen carefully to executive leadership, exploring commercial targets, operational drag, and specific people challenges before defining scope.',
-    },
-    {
-      step: '02',
-      name: 'Diagnose',
-      title: 'Evidence, Risks & Root Causes',
-      description: 'We review existing documentation, statutory registers, workflows, and manager feedback to identify root causes rather than superficial symptoms.',
-    },
-    {
-      step: '03',
-      name: 'Design',
-      title: 'Practical Recommendations & Roadmaps',
-      description: 'We co-create grounded frameworks, usable SOPs, goal-setting toolkits, and an agreed implementation plan tailored to your operating environment.',
-    },
-    {
-      step: '04',
-      name: 'Deliver',
-      title: 'Implementation & Clear Ownership',
-      description: 'We support rollout through active manager enablement, clear accountability, and structured milestones that ensure adoption across business units.',
-    },
-    {
-      step: '05',
-      name: 'Demonstrate',
-      title: 'Progress Review & Continuous Improvement',
-      description: 'We evaluate progress against commercial outcomes, capture organisational learning, and identify the next cycle of performance improvement.',
-    },
-  ];
+  const { content } = useContent();
+
+  const approachStages = content.home.approach.stages.map((stg) => ({
+    step: stg.step,
+    name: stg.name,
+    title: `${stg.name} (${stg.duration})`,
+    description: stg.description,
+  }));
 
   return (
     <div className="flex flex-col w-full">
@@ -57,13 +30,13 @@ export default function AboutPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl space-y-4">
             <span className="text-[11px] font-bold tracking-[0.2em] uppercase text-[#846A3F] block">
-              ABOUT MERIT &amp; BEYOND
+              {content.about.hero.eyebrow}
             </span>
             <h1 className="text-4xl sm:text-5xl font-serif text-[#29231D] tracking-tight leading-tight">
-              Where people strategy meets business possibility.
+              {content.about.hero.headline}
             </h1>
             <p className="text-base sm:text-lg text-[#29231D]/80 leading-relaxed font-sans pt-2">
-              Merit &amp; Beyond is a People &amp; Business Advisory firm focused on helping organisations strengthen HR systems, develop leadership capability and improve workplace effectiveness. We believe sustainable performance depends on clear priorities, capable people, consistent processes and the discipline to turn insight into action.
+              {content.about.hero.subheadline}
             </p>
           </div>
         </div>
@@ -95,10 +68,10 @@ export default function AboutPage() {
                 Our Purpose
               </h2>
               <p className="text-sm text-[#29231D]/80 leading-relaxed font-sans">
-                To help organisations make better people decisions and build the systems and capabilities that support stronger performance.
+                {content.about.purpose.mission}
               </p>
               <div className="pt-4 border-t border-[#F3E9D8] text-xs text-[#846A3F] font-semibold tracking-wide">
-                PEOPLE | PROCESSES | POSSIBILITIES
+                {content.global.tagline}
               </div>
             </div>
           </div>

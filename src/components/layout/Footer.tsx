@@ -1,7 +1,10 @@
+'use client';
+
 import React from 'react';
 import Link from 'next/link';
 import { Phone, Mail, Globe, ArrowUpRight, ShieldAlert } from 'lucide-react';
 import Logo from '@/components/ui/Logo';
+import { useContent } from '@/lib/contentContext';
 
 function LinkedinIcon(props: React.SVGProps<SVGSVGElement>) {
   return (
@@ -14,6 +17,7 @@ function LinkedinIcon(props: React.SVGProps<SVGSVGElement>) {
 }
 
 export default function Footer() {
+  const { content } = useContent();
   const currentYear = new Date().getFullYear();
 
   return (
@@ -24,13 +28,13 @@ export default function Footer() {
           <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6">
             <div>
               <span className="text-[11px] uppercase tracking-[0.25em] text-[#B69A6A] font-semibold">
-                PEOPLE | PROCESSES | POSSIBILITIES
+                {content.global.tagline}
               </span>
               <h3 className="text-2xl sm:text-3xl font-serif text-white mt-1.5">
-                Better People Decisions. Stronger Business Performance.
+                {content.home.hero.headline}
               </h3>
               <p className="text-xs text-[#DEC8A9]/80 mt-1 max-w-xl font-sans">
-                Practical thinking. Clear priorities. Better execution.
+                {content.home.hero.subheadline}
               </p>
             </div>
             <Link
@@ -149,28 +153,28 @@ export default function Footer() {
             </p>
             <div className="space-y-2.5 text-xs">
               <a
-                href="mailto:ish@meritandbeyond.in"
+                href={`mailto:${content.global.email}`}
                 className="flex items-center gap-2.5 text-[#DEC8A9]/90 hover:text-white transition-colors"
               >
                 <Mail className="w-3.5 h-3.5 text-[#B69A6A]" />
-                <span className="truncate">ish@meritandbeyond.in</span>
+                <span className="truncate">{content.global.email}</span>
               </a>
 
               <a
-                href="tel:+916366056770"
+                href={`tel:${content.global.phone.replace(/\s+/g, '')}`}
                 className="flex items-center gap-2.5 text-[#DEC8A9]/90 hover:text-white transition-colors"
               >
                 <Phone className="w-3.5 h-3.5 text-[#B69A6A]" />
-                <span>+91 63660 56770</span>
+                <span>{content.global.phone}</span>
               </a>
 
               <div className="flex items-center gap-2.5 text-[#DEC8A9]/90">
                 <Globe className="w-3.5 h-3.5 text-[#B69A6A]" />
-                <span>www.meritandbeyond.in</span>
+                <span>{content.global.website}</span>
               </div>
 
               <a
-                href="https://www.linkedin.com/company/meritandbeyond/"
+                href={content.global.linkedinUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-2.5 text-[#DEC8A9]/90 hover:text-[#B69A6A] transition-colors"

@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from 'next';
 import './globals.css';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
+import { ContentProvider } from '@/lib/contentContext';
 
 export const viewport: Viewport = {
   width: 'device-width',
@@ -61,11 +62,13 @@ export default function RootLayout({
         />
       </head>
       <body className="min-h-screen flex flex-col bg-[#F3E9D8] text-[#29231D] font-sans antialiased selection:bg-[#B69A6A]/30 selection:text-[#29231D]">
-        <Navbar />
-        <main className="flex-grow">
-          {children}
-        </main>
-        <Footer />
+        <ContentProvider>
+          <Navbar />
+          <main className="flex-grow">
+            {children}
+          </main>
+          <Footer />
+        </ContentProvider>
       </body>
     </html>
   );
